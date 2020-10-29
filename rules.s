@@ -12,8 +12,6 @@ _asmTest:
     ret
 
 
-section .data
-
 _daRulz:
     dq _rule1
     dq _rule2

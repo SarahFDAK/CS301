@@ -1,11 +1,12 @@
 #include "game.h"
 
-extern "C" char* asmTest(int);
-extern "C" char* equip(int);
+//link to assembly functions
+extern "C" char* asmTest(long);
+extern "C" char* equip(long);
 
 Player::Player(){};
 
-void Player::setPossession(int hold){
+void Player::setPossession(long hold){
     _calvinBall = hold;
 }
 
@@ -17,15 +18,15 @@ void Player::setBoomerangUse(){
     _boomerang = 1;
 }
 
-int Player::getPossession() const{
+long Player::getPossession() const{
     return _calvinBall;
 }
 
-int Player::getOppPoleUse() const{
+long Player::getOppPoleUse() const{
     return _oppPole;
 }
 
-int Player::getBoomerangUse() const{
+long Player::getBoomerangUse() const{
     return _boomerang;
 }
 
@@ -36,10 +37,11 @@ void menu(){
                  "User Input: " << std::endl;
 }
 
-int choice(int max){
+//Generate a random number to pass to the assembly files, dictating which rule or tool to return
+long choice(long max){
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dist(0,max);
+    std::uniform_int_distribution<long> dist(0,max);
     return dist(gen);
 }
 
@@ -49,7 +51,7 @@ void getAsm(){
 }
 
 void game(Player you){
-    int select = 0;
+    long select = 0;
     std::string gEntry = "";
     do{
         std::cout << "Make a selection:\n" <<

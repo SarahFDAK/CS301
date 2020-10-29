@@ -5,7 +5,7 @@ int main(){
     std::cout << "Welcome to Calvinball! \n";
     menu();
     
-    int menuChoice = 0;
+    long menuChoice = 0;
     std::string entry = "";
     while(true){
         std::getline(std::cin, entry);
