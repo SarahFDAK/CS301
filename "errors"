@@ -1,0 +1,46 @@
+List of set debug subcommands:
+
+set debug arch -- Set architecture debugging.
+set debug auto-load -- Set auto-load verifications debugging.
+set debug bfd-cache -- Set bfd cache debugging.
+set debug check-physname -- Set cross-checking of "physname" code against demangler.
+set debug coff-pe-read -- Set coff PE read debugging.
+set debug compile -- Set compile command debugging.
+set debug compile-cplus-scopes -- Set debugging of C++ compile scopes.
+set debug compile-cplus-types -- Set debugging of C++ compile type conversion.
+set debug darwin -- Set if printing inferior communication debugging statements.
+set debug displaced -- Set displaced stepping debugging.
+set debug dwarf-die -- Set debugging of the DWARF DIE reader.
+set debug dwarf-line -- Set debugging of the dwarf line reader.
+set debug dwarf-read -- Set debugging of the DWARF reader.
+set debug entry-values -- Set entry values and tail call frames debugging.
+set debug expression -- Set expression debugging.
+set debug frame -- Set frame debugging.
+set debug index-cache -- Set display of index-cache debug messages.
+set debug infrun -- Set inferior debugging.
+set debug jit -- Set JIT debugging.
+set debug mach-o -- Set if printing Mach-O symbols processing.
+set debug notification -- Set debugging of async remote notification.
+set debug observer -- Set observer debugging.
+set debug overload -- Set debugging of C++ overloading.
+set debug parser -- Set parser debugging.
+set debug py-unwind -- Set Python unwinder debugging.
+set debug record -- Set debugging of record/replay feature.
+set debug remote -- Set debugging of remote protocol.
+set debug remote-packet-max-chars -- Set the maximum number of characters to display for each remote packet.
+set debug separate-debug-file -- Set printing of separate debug info file search debug.
+set debug serial -- Set serial debugging.
+set debug skip -- Set whether to print the debug output about skipping files and functions.
+set debug symbol-lookup -- Set debugging of symbol lookup.
+set debug symfile -- Set debugging of the symfile functions.
+set debug symtab-create -- Set debugging of symbol table creation.
+set debug target -- Set target debugging.
+set debug timestamp -- Set timestamping of debugging messages.
+set debug varobj -- Set varobj debugging.
+set debug xml -- Set XML parser debugging.
+
+Type "help set debug" followed by set debug subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
+Starting program: /Users/Mine/CS301/main 
