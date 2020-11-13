@@ -52,7 +52,7 @@ void getAsm(){
 
 void game(Player you){
     long select = 0;
-    std::string gEntry = "";
+    std::string gEntry;
     do{
         std::cout << "Make a selection:\n" <<
                      "1) Move left\n" <<
