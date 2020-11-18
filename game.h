@@ -28,6 +28,8 @@ long choice(long max);//Random number generator to select random rules and equip
 
 void game(Player you); //main game code
 
-void getAsm(); //get input from asm files
+void getAsmDirection(); //get input from asm rules file
+
+void getAsmEquipment(); //get input from asm equiptment file
 
 #endif

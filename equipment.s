@@ -1,6 +1,5 @@
-section .text
-
 global _equip
+section .text
 
 _equip:
 	mov rcx, rdi
@@ -12,12 +11,9 @@ _equip:
 
 _equipment:
 	dq birdie
-	dq mallet
 	dq soccer
 	dq pinecone
-	dq wicket
 	dq balloon
-	dq bucket
 	dq racket
 	dq horse
 	dq bat
@@ -27,18 +23,12 @@ _equipment:
 
 birdie:
 	db `a badminton birdie\0`
-mallet:
-	db `a croquet mallet\0`
 soccer:
 	db `a soccer ball\0`
 pinecone:
 	db `pinecones\0`
-wicket:
-	db `wickets\0`
 balloon:
 	db `water balloons\0`
-bucket:
-	db `buckets\0`
 racket:
 	db `a tennis racket\0`	
 horse:							

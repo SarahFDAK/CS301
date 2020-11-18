@@ -45,14 +45,19 @@ long choice(long max){
     return dist(gen);
 }
 
-void getAsm(){
+void getAsmDirection(){
     std::cout << "\n" << asmTest(choice(3)) << "\n" << std::endl;
-    std::cout << "Use " << equip(choice(12)) << " to do this.\n" << std::endl;
+}
+
+void getAsmEquipment(){
+    std::cout << "You have " << equip(choice(9)) << ".\n" << std::endl;
 }
 
 void game(Player you){
     long select = 0;
     std::string gEntry;
+    getAsmDirection();
+    getAsmEquipment();
     do{
         std::cout << "Make a selection:\n" <<
                      "1) Move left\n" <<
@@ -64,38 +69,42 @@ void game(Player you){
         std::getline(std::cin, gEntry);
         std::istringstream gameString(gEntry);
         if(gameString >> select){
-            //if(select == -1)
-             //   break;
+            
             if(select == 1){
                 std::cout << "\nYou moved left.\n";
-                getAsm();
+                getAsmDirection();
+                getAsmEquipment();
             }
-            if(select == 2){
+            else if(select == 2){
                 std::cout << "\nYou moved right.\n";
-                getAsm();
+                getAsmDirection();
+                getAsmEquipment();
             }
-            if(select == 3){
+            else if(select == 3){
                 std::cout <<"\nYou ran in circles.\n";
-                getAsm();
+                getAsmDirection();
+                getAsmEquipment();
             }
-            if(select == 4){
+            else if(select == 4){
                 if(you.getOppPoleUse() == 1){
                     std::cout << "\nSorry, you already touched the opposite pole to get out of something.\n" << std::endl;
                 }
                 else{
                     you.setOppPoleUse();
                     std::cout << "\nYou touched the opposite pole! Now you don't have to do anything!\n" << std::endl;
-                    getAsm();
+                    getAsmDirection();
+                    getAsmEquipment();
                 }
             }
-            if(select == 5){
+            else if(select == 5){
                 if(you.getBoomerangUse() == 1){
                     std::cout << "\nSorry, you already called the Boomerang Zone to get out of something.\n" << std::endl;
                 }
                 else{
                     you.setBoomerangUse();
                     std::cout << "\nYou called Boomerang Zone! That means I have to do that!! D:\n" << std::endl;
-                    getAsm();
+                    getAsmDirection();
+                    getAsmEquipment();
                 }
             }
         }
