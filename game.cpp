@@ -1,7 +1,7 @@
 #include "game.h"
 
 //link to assembly functions
-extern "C" char* asmTest(long);
+extern "C" char* verbs(long);
 extern "C" char* equip(long);
 
 Player::Player(){};
@@ -46,7 +46,7 @@ long choice(long max){
 }
 
 void getAsmDirection(){
-    std::cout << "\n" << asmTest(choice(3)) << "\n" << std::endl;
+    std::cout << "\n" << verbs(choice(5)) << "\n" << std::endl;
 }
 
 void getAsmEquipment(){
