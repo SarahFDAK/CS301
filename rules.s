@@ -1,30 +1,38 @@
-global _asmTest
+global _verbs
 
 section .text
 
-_asmTest:
+_verbs:
     mov rcx, rdi
-    lea rdx, [rel _daRulz]
+    lea rdx, [rel _verb]
     
     mov rax, [rdx + 8*rcx]
 
     ret
 
 
-_daRulz:
-    dq _rule1
-    dq _rule2
-    dq _rule3
-    dq _rule4
+_verb:
+    dq _action1
+    dq _action2
+    dq _action3
+    dq _action4
+    dq _action5
+    dq _action6
 
-_rule1:
-   db `Hit this through a wicket with a cricket bat.\0`
+_action1:
+   db `Hit\0`
 
-_rule2:
-   db `Throw this into a bucket.\0`
+_action2:
+   db `Throw\0`
 
-_rule3:
-   db `Knock this into the Master Tree using a croquet mallet.\0`
+_action3:
+   db `Knock\0`
 
-_rule4:
-   db `Bounce this on a tennis racket while jumping on one leg.\0`
+_action4:
+   db `Bounce\0`
+  
+_action5:
+   db `Hold\0`
+   
+_action6:
+   db `Hop over\0`
