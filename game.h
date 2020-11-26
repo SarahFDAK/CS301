@@ -30,6 +30,8 @@ void game(Player you); //main game code
 
 void getAsmDirection(); //get input from asm rules file
 
-void getAsmEquipment(); //get input from asm equiptment file
+void getAsmEquipment(); //get input from asm equipment file
+
+void getAsmObjective(); //get input from asm objectives file
 
 #endif
