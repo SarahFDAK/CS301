@@ -1,8 +1,9 @@
 #include "game.h"
 
 //link to assembly functions
-extern "C" char* asmTest(long);
+extern "C" char* verbs(long);
 extern "C" char* equip(long);
+extern "C" char* objectives(long);
 
 Player::Player(){};
 
@@ -37,27 +38,14 @@ void menu(){
                  "User Input: " << std::endl;
 }
 
-//Generate a random number to pass to the assembly files, dictating which rule or tool to return
-long choice(long max){
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<long> dist(0,max);
-    return dist(gen);
-}
-
 void getAsmDirection(){
-    std::cout << "\n" << asmTest(choice(3)) << "\n" << std::endl;
-}
-
-void getAsmEquipment(){
-    std::cout << "You have " << equip(choice(9)) << ".\n" << std::endl;
+    std::cout << "\n" << verbs(choice(5)) << " " << equip(choice(9)) << " " << objectives(2) << "\n" << std::endl;
 }
 
 void game(Player you){
     long select = 0;
     std::string gEntry;
     getAsmDirection();
-    getAsmEquipment();
     do{
         std::cout << "Make a selection:\n" <<
                      "1) Move left\n" <<
@@ -73,17 +61,14 @@ void game(Player you){
             if(select == 1){
                 std::cout << "\nYou moved left.\n";
                 getAsmDirection();
-                getAsmEquipment();
             }
             else if(select == 2){
                 std::cout << "\nYou moved right.\n";
                 getAsmDirection();
-                getAsmEquipment();
             }
             else if(select == 3){
                 std::cout <<"\nYou ran in circles.\n";
                 getAsmDirection();
-                getAsmEquipment();
             }
             else if(select == 4){
                 if(you.getOppPoleUse() == 1){
@@ -93,7 +78,6 @@ void game(Player you){
                     you.setOppPoleUse();
                     std::cout << "\nYou touched the opposite pole! Now you don't have to do anything!\n" << std::endl;
                     getAsmDirection();
-                    getAsmEquipment();
                 }
             }
             else if(select == 5){
@@ -104,7 +88,6 @@ void game(Player you){
                     you.setBoomerangUse();
                     std::cout << "\nYou called Boomerang Zone! That means I have to do that!! D:\n" << std::endl;
                     getAsmDirection();
-                    getAsmEquipment();
                 }
             }
             else std::cout << "\nPlease choose 1-5 or enter -1 to quit.\n" << std::endl;
