@@ -3,6 +3,7 @@
 //link to assembly functions
 extern "C" char* verbs(long);
 extern "C" char* equip(long);
+extern "C" char* objectives(long);
 
 Player::Player(){};
 
@@ -46,12 +47,15 @@ long choice(long max){
 }
 
 void getAsmDirection(){
-    std::cout << "\n" << verbs(choice(5)) << "\n" << std::endl;
+    std::cout << "\n" << verbs(choice(5)) << " ";
 }
 
 void getAsmEquipment(){
-    std::cout << "You have " << equip(choice(9)) << ".\n" << std::endl;
+    std::cout << equip(choice(9)) << " ";
 }
+
+void getAsmObjective(){
+    std::cout << objectives(2) << "\n" << std::endl;
 
 void game(Player you){
     long select = 0;
