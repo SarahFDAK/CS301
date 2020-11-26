@@ -3,6 +3,7 @@
 #include <tuple>
 
 #include "game.h"
+#include "PlayingField.h"
 
 //link to assembly functions
 extern "C" char* verbs(long);
@@ -43,10 +44,13 @@ void menu(){
 }
 
 //Generate a random number to pass to the assembly files, dictating which rule or tool to return
-long choice(long max){
+std::mt19937 rand(){
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<long> dist(0,max);
+    return gen;
+}
+long choice(long min, long max,std::mt19937 gen){
+    std::uniform_int_distribution<long> dist(min,max);
     return dist(gen);
 }
 
@@ -100,8 +104,37 @@ std::tuple<int, int, int> zoneField(int area){
 //19S    M, R, T
 //20T    O, P, S
 
+//Create vector to hold numbers 1 through 20 to shuffle randomly for distribution
+//later; create vector to hold field area numbers
+std::vector<int> areas;
+std::vector<Field> fields;
+
+//Populate area numbers vector and fields vector
+for(int i = 0; i < 20; i++){
+    areas.push_back(i+1);
+    Field area(i+1);
+    fields.push_back(area);
+}
+
+//Randomly shuffle rooms 1-20, then push them to the area numbers map
+std::shuffle(areas.begin(), areas.end(), rand());
+for(int j = 0; j < 20; j++){
+    zones[j+1] = areas[j];
+}
+
+//Create neighbor zones for each field area using the zoneField map and the zones
+//tuple.
+for(int k = 0; k < 20; k++){
+    int zone1, zone2, zone3;
+    std::tie(zone1, zone2, zone3) = zoneField(k+1);
+    fields[k].setWilson1(zone1);
+    fields[k].setWilson2(zone2);
+    fields[k].setWilson3(zone3);
+}
+
+
 void getAsmDirection(){
-    std::cout << "\n" << verbs(choice(5)) << " " << equip(choice(9)) << " " << objectives(choice(5)) << "\n" << std::endl;
+    std::cout << "\n" << verbs(choice(0,5)) << " " << equip(choice(0,9)) << " " << objectives(choice(0,5)) << "\n" << std::endl;
 }
 
 void game(Player you){
