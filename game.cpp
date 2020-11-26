@@ -47,21 +47,13 @@ long choice(long max){
 }
 
 void getAsmDirection(){
-    std::cout << "\n" << verbs(choice(5)) << " ";
+    std::cout << "\n" << verbs(choice(5)) << " " << equip(choice(9)) << " " << objectives(2) << "\n" << std::endl;
 }
-
-void getAsmEquipment(){
-    std::cout << equip(choice(9)) << " ";
-}
-
-void getAsmObjective(){
-    std::cout << objectives(2) << "\n" << std::endl;
 
 void game(Player you){
     long select = 0;
     std::string gEntry;
     getAsmDirection();
-    getAsmEquipment();
     do{
         std::cout << "Make a selection:\n" <<
                      "1) Move left\n" <<
@@ -77,17 +69,14 @@ void game(Player you){
             if(select == 1){
                 std::cout << "\nYou moved left.\n";
                 getAsmDirection();
-                getAsmEquipment();
             }
             else if(select == 2){
                 std::cout << "\nYou moved right.\n";
                 getAsmDirection();
-                getAsmEquipment();
             }
             else if(select == 3){
                 std::cout <<"\nYou ran in circles.\n";
                 getAsmDirection();
-                getAsmEquipment();
             }
             else if(select == 4){
                 if(you.getOppPoleUse() == 1){
@@ -97,7 +86,6 @@ void game(Player you){
                     you.setOppPoleUse();
                     std::cout << "\nYou touched the opposite pole! Now you don't have to do anything!\n" << std::endl;
                     getAsmDirection();
-                    getAsmEquipment();
                 }
             }
             else if(select == 5){
@@ -108,7 +96,6 @@ void game(Player you){
                     you.setBoomerangUse();
                     std::cout << "\nYou called Boomerang Zone! That means I have to do that!! D:\n" << std::endl;
                     getAsmDirection();
-                    getAsmEquipment();
                 }
             }
         }
