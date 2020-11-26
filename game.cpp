@@ -107,6 +107,7 @@ void game(Player you){
                     getAsmEquipment();
                 }
             }
+            else std::cout << "\nPlease choose 1-5 or enter -1 to quit.\n" << std::endl;
         }
         else std::cout << "\nPlease choose 1-5 or enter -1 to quit.\n" << std::endl;
     }while(select != -1);
