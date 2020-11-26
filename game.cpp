@@ -1,3 +1,7 @@
+#include <map>
+#include <algorithm>
+#include <tuple>
+
 #include "game.h"
 
 //link to assembly functions
@@ -45,6 +49,56 @@ long choice(long max){
     std::uniform_int_distribution<long> dist(0,max);
     return dist(gen);
 }
+
+//Initialize zones map to fill with randomized numbers between 1 and 20
+std::map<int, int> zones;
+
+//Create zone map associating each area number with its 3 neighbors
+std::tuple<int, int, int> zoneField(int area){
+    if(area == 1) return std::make_tuple(zones[2], zones[5], zones[6]);
+    if(area == 2) return std::make_tuple(zones[1], zones[3], zones[8]);
+    if(area == 3) return std::make_tuple(zones[2], zones[4], zones[10]);
+    if(area == 4) return std::make_tuple(zones[3], zones[5], zones[12]);
+    if(area == 5) return std::make_tuple(zones[1], zones[4], zones[14]);
+    if(area == 6) return std::make_tuple(zones[1], zones[7], zones[15]);
+    if(area == 7) return std::make_tuple(zones[6], zones[8], zones[16]);
+    if(area == 8) return std::make_tuple(zones[2], zones[7], zones[9]);
+    if(area == 9) return std::make_tuple(zones[8], zones[10], zones[17]);
+    if(area == 10) return std::make_tuple(zones[3], zones[9], zones[11]);
+    if(area == 11) return std::make_tuple(zones[10], zones[12], zones[18]);
+    if(area == 12) return std::make_tuple(zones[4], zones[11], zones[13]);
+    if(area == 13) return std::make_tuple(zones[12], zones[14], zones[19]);
+    if(area == 14) return std::make_tuple(zones[5], zones[13], zones[15]);
+    if(area == 15) return std::make_tuple(zones[6], zones[14], zones[20]);
+    if(area == 16) return std::make_tuple(zones[7], zones[17], zones[20]);
+    if(area == 17) return std::make_tuple(zones[9], zones[16], zones[18]);
+    if(area == 18) return std::make_tuple(zones[11], zones[17], zones[19]);
+    if(area == 19) return std::make_tuple(zones[13], zones[18], zones[20]);
+    else return std::make_tuple(zones[15], zones[16], zones[19]);
+    
+};
+//Zone map:
+//Area  Neighbors
+//1 A    B, E, F
+//2 B    A, C, H
+//3 C    B, D, J
+//4 D    C, E, L
+//5 E    A, D, N
+//6 F    A, G, O
+//7 G    F, H, P
+//8 H    B, G, I
+//9 I    H, J, Q
+//10J    C, I, K
+//11K    J, L, R
+//12L    D, K, M
+//13M    L, N, S
+//14N    E, M, O
+//15O    F, N, T
+//16P    G, Q, T
+//17Q    I, P, R
+//18R    K, Q, S
+//19S    M, R, T
+//20T    O, P, S
 
 void getAsmDirection(){
     std::cout << "\n" << verbs(choice(5)) << " " << equip(choice(9)) << " " << objectives(choice(5)) << "\n" << std::endl;
@@ -105,4 +159,38 @@ void game(Player you){
     std::cout << "Thanks for playing!" << std::endl;
 }
 
+int main(){
+    Player you;
+    std::cout << "Welcome to Calvinball! \n";
+    menu();
+    
+    long menuChoice = 0;
+    std::string entry = "";
+    while(true){
+        std::getline(std::cin, entry);
+        std::istringstream iss(entry);
+        if(iss >> menuChoice){
+            if(menuChoice == 1){
+                game(you);
+                break;
+            }
+            if(menuChoice == 2){
+                std::cout << "The only rule is that you can't play it the same way twice!\n" <<
+                             "Make a choice:\n" <<
+                             "User Input: " << std::endl;
+                continue;
+            }
+            if(menuChoice == 3){
+                std::cout << "Thanks for playing!" << std::endl;
+                return 0;
+            }
+            else {
+                std::cout << "That isn't an option. Please make a choice.\n" <<
+                             "User Input: " << std::endl;
+                continue;
+            }
+        }
+    }
 
+    return 0;
+}
