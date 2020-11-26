@@ -24,7 +24,13 @@ public:
 
 void menu(); //menu text
 
-long choice(long max);//Random number generator to select random rules and equipment
+//Generate a random number to pass to the assembly files, dictating which rule or tool to return
+long choice(long max){
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<long> dist(0,max);
+    return dist(gen);
+}
 
 void game(Player you); //main game code
 
