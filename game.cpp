@@ -38,8 +38,16 @@ void menu(){
                  "User Input: " << std::endl;
 }
 
+//Generate a random number to pass to the assembly files, dictating which rule or tool to return
+long choice(long max){
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<long> dist(0,max);
+    return dist(gen);
+}
+
 void getAsmDirection(){
-    std::cout << "\n" << verbs(choice(5)) << " " << equip(choice(9)) << " " << objectives(2) << "\n" << std::endl;
+    std::cout << "\n" << verbs(choice(5)) << " " << equip(choice(9)) << " " << objectives(choice(5)) << "\n" << std::endl;
 }
 
 void game(Player you){
