@@ -34,3 +34,11 @@ _goal5:
 
 _goal6:
   db `when you hear that one screeching bird. No, not THAT one, THAT ONE!\0`
+
+_goal7:
+  db `while you sing the Lumberjack Song.\0`
+
+_goal8:
+  db `backward on one foot.\0`
+
+

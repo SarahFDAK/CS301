@@ -9,6 +9,7 @@
 extern "C" char* verbs(long);
 extern "C" char* equip(long);
 extern "C" char* objectives(long);
+extern "C" char* points(long);
 
 Player::Player(){};
 

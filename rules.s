@@ -36,3 +36,6 @@ _action5:
    
 _action6:
    db `Hop over\0`
+
+_action7:
+   db `Hop\0`
