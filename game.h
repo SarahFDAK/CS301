@@ -16,7 +16,7 @@ public:
     Player(const long zone);
     
     void setPlayerZone(long zone);
-    void setPossession(long hold); //change if player has the Calvinball or not
+    void setPossession(long ball); //change if player has the Calvinball or not
     void setOppPoleUse(); //change to 1 if player has touched the opposite pole
     void setBoomerangUse(); //change to 1 if player has called Boomerang Zone
     

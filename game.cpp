@@ -13,8 +13,8 @@ extern "C" char* points(long);
 
 Player::Player(){};
 
-void Player::setPossession(long hold){
-    _calvinBall = hold;
+void Player::setPossession(long ball){
+    _calvinBall = ball;
 }
 
 void Player::setOppPoleUse(){
@@ -55,31 +55,31 @@ long choice(long min, long max,std::mt19937 gen){
     return dist(gen);
 }
 
-//Initialize zones map to fill with randomized numbers between 1 and 20
-std::map<int, int> zones;
+//Initialize sectors map to fill with randomized numbers between 1 and 20
+std::map<int, int> sectors;
 
 //Create zone map associating each area number with its 3 neighbors
-std::tuple<int, int, int> zoneField(int area){
-    if(area == 1) return std::make_tuple(zones[2], zones[5], zones[6]);
-    if(area == 2) return std::make_tuple(zones[1], zones[3], zones[8]);
-    if(area == 3) return std::make_tuple(zones[2], zones[4], zones[10]);
-    if(area == 4) return std::make_tuple(zones[3], zones[5], zones[12]);
-    if(area == 5) return std::make_tuple(zones[1], zones[4], zones[14]);
-    if(area == 6) return std::make_tuple(zones[1], zones[7], zones[15]);
-    if(area == 7) return std::make_tuple(zones[6], zones[8], zones[16]);
-    if(area == 8) return std::make_tuple(zones[2], zones[7], zones[9]);
-    if(area == 9) return std::make_tuple(zones[8], zones[10], zones[17]);
-    if(area == 10) return std::make_tuple(zones[3], zones[9], zones[11]);
-    if(area == 11) return std::make_tuple(zones[10], zones[12], zones[18]);
-    if(area == 12) return std::make_tuple(zones[4], zones[11], zones[13]);
-    if(area == 13) return std::make_tuple(zones[12], zones[14], zones[19]);
-    if(area == 14) return std::make_tuple(zones[5], zones[13], zones[15]);
-    if(area == 15) return std::make_tuple(zones[6], zones[14], zones[20]);
-    if(area == 16) return std::make_tuple(zones[7], zones[17], zones[20]);
-    if(area == 17) return std::make_tuple(zones[9], zones[16], zones[18]);
-    if(area == 18) return std::make_tuple(zones[11], zones[17], zones[19]);
-    if(area == 19) return std::make_tuple(zones[13], zones[18], zones[20]);
-    else return std::make_tuple(zones[15], zones[16], zones[19]);
+std::tuple<int, int, int> zoneField(int areaNum){
+    if(areaNum == 1) return std::make_tuple(sectors[2], sectors[5], sectors[6]);
+    if(areaNum == 2) return std::make_tuple(sectors[1], sectors[3], sectors[8]);
+    if(areaNum == 3) return std::make_tuple(sectors[2], sectors[4], sectors[10]);
+    if(areaNum == 4) return std::make_tuple(sectors[3], sectors[5], sectors[12]);
+    if(areaNum == 5) return std::make_tuple(sectors[1], sectors[4], sectors[14]);
+    if(areaNum == 6) return std::make_tuple(sectors[1], sectors[7], sectors[15]);
+    if(areaNum == 7) return std::make_tuple(sectors[6], sectors[8], sectors[16]);
+    if(areaNum == 8) return std::make_tuple(sectors[2], sectors[7], sectors[9]);
+    if(areaNum == 9) return std::make_tuple(sectors[8], sectors[10], sectors[17]);
+    if(areaNum == 10) return std::make_tuple(sectors[3], sectors[9], sectors[11]);
+    if(areaNum == 11) return std::make_tuple(sectors[10], sectors[12], sectors[18]);
+    if(areaNum == 12) return std::make_tuple(sectors[4], sectors[11], sectors[13]);
+    if(areaNum == 13) return std::make_tuple(sectors[12], sectors[14], sectors[19]);
+    if(areaNum == 14) return std::make_tuple(sectors[5], sectors[13], sectors[15]);
+    if(areaNum == 15) return std::make_tuple(sectors[6], sectors[14], sectors[20]);
+    if(areaNum == 16) return std::make_tuple(sectors[7], sectors[17], sectors[20]);
+    if(areaNum == 17) return std::make_tuple(sectors[9], sectors[16], sectors[18]);
+    if(areaNum == 18) return std::make_tuple(sectors[11], sectors[17], sectors[19]);
+    if(areaNum == 19) return std::make_tuple(sectors[13], sectors[18], sectors[20]);
+    else return std::make_tuple(sectors[15], sectors[16], sectors[19]);
     
 };
 //Zone map:
@@ -120,10 +120,10 @@ for(int i = 0; i < 20; i++){
 //Randomly shuffle rooms 1-20, then push them to the area numbers map
 std::shuffle(areas.begin(), areas.end(), rand());
 for(int j = 0; j < 20; j++){
-    zones[j+1] = areas[j];
+    sectors[j+1] = areas[j];
 }
 
-//Create neighbor zones for each field area using the zoneField map and the zones
+//Create neighbor area for each field area using the zoneField map and the sectors
 //tuple.
 for(int k = 0; k < 20; k++){
     int zone1, zone2, zone3;
