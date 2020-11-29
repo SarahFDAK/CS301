@@ -15,6 +15,14 @@ extern "C" char* points(int);
 
 Player::Player(){};
 
+Player::Player(int sector){
+    _playerZone = sector;
+};
+
+void Player::setPlayerSector(int sector){
+    _playerZone = sector;
+}
+
 void Player::setPossession(int ball){
     _calvinBall = ball;
 }
@@ -25,6 +33,10 @@ void Player::setOppPoleUse(){
 
 void Player::setBoomerangUse(){
     _boomerang = 1;
+}
+
+int Player::getPlayerSector() const{
+    return _playerZone;
 }
 
 int Player::getPossession() const{
