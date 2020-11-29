@@ -2,7 +2,6 @@
 #define Zones_hpp
 
 #include <stdio.h>
-#include "PlayingField.h"
 
 class Zones {
     int _zoneArea = 0;

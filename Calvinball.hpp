@@ -7,7 +7,7 @@ class Calvinball {
     int _ballZone = 0;
     
 public:
-    Calvinall();
+    Calvinball();
     Calvinball(int area);
     
     void setBallZone(const int area);

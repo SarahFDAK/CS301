@@ -8,14 +8,14 @@
 #include "Calvinball.hpp"
 
 //link to assembly functions
-extern "C" char* verbs(long);
-extern "C" char* equip(long);
-extern "C" char* objectives(long);
-extern "C" char* points(long);
+extern "C" char* verbs(int);
+extern "C" char* equip(int);
+extern "C" char* objectives(int);
+extern "C" char* points(int);
 
 Player::Player(){};
 
-void Player::setPossession(long ball){
+void Player::setPossession(int ball){
     _calvinBall = ball;
 }
 
@@ -27,15 +27,15 @@ void Player::setBoomerangUse(){
     _boomerang = 1;
 }
 
-long Player::getPossession() const{
+int Player::getPossession() const{
     return _calvinBall;
 }
 
-long Player::getOppPoleUse() const{
+int Player::getOppPoleUse() const{
     return _oppPole;
 }
 
-long Player::getBoomerangUse() const{
+int Player::getBoomerangUse() const{
     return _boomerang;
 }
 
@@ -177,7 +177,7 @@ void game(Player you){
           corollary.getZoneArea() == noSong.getZoneArea() ||
           corollary.getZoneArea() == invisible.getZoneArea())
         corollary.setZoneArea(choice(1,20,PRNG()));
-    long select = 0;
+    int select = 0;
     std::string gEntry;
     getAsmDirection();
     
@@ -238,7 +238,7 @@ int main(){
     std::cout << "Welcome to Calvinball! \n";
     menu();
     
-    long menuChoice = 0;
+    int menuChoice = 0;
     std::string entry = "";
     while(true){
         std::getline(std::cin, entry);
