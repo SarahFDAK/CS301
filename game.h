@@ -13,9 +13,9 @@ class Player {
     long _boomerang = 0; //=1 if boomerang zone used
 public:
     Player();
-    Player(const long zone);
+    Player(const long sector);
     
-    void setPlayerZone(long zone);
+    void setPlayerSector(long sector);
     void setPossession(long ball); //change if player has the Calvinball or not
     void setOppPoleUse(); //change to 1 if player has touched the opposite pole
     void setBoomerangUse(); //change to 1 if player has called Boomerang Zone
@@ -23,11 +23,12 @@ public:
     long getPossession() const;
     long getOppPoleUse() const;
     long getBoomerangUse() const;
+    long getPlayerSector() const;
 };
 
 void menu(); //menu text
 
-long choice(long min, long max);
+int choice(int min, int max, std::mt19937 gen);
 
 void game(Player you); //main game code
 

@@ -8,10 +8,10 @@ _points:
 	dq point3
 
 point1:
-	db 'oogy\0`
+	db `oogy\0`
 
 point2:
-	db 'boogy\0`
+	db `boogy\0`
 
 point3:
 	db 1
@@ -32,13 +32,13 @@ point8:
     db `fizz\0`
 
 point9:
-    db 'ump\0`
+    db `ump\0`
 
 point10:
     db `bump\0`
 
 point11:
-    db 'olly\0`
+    db `olly\0`
 
 point12:
     db `polly\0`

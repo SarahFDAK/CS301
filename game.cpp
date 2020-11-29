@@ -3,7 +3,9 @@
 #include <tuple>
 
 #include "game.h"
-#include "PlayingField.h"
+#include "PlayingField.hpp"
+#include "Zones.hpp"
+#include "Calvinball.hpp"
 
 //link to assembly functions
 extern "C" char* verbs(long);
@@ -45,21 +47,22 @@ void menu(){
 }
 
 //Generate a random number to pass to the assembly files, dictating which rule or tool to return
-std::mt19937 rand(){
+std::mt19937 PRNG(){
     std::random_device rd;
     std::mt19937 gen(rd());
     return gen;
 }
-long choice(long min, long max,std::mt19937 gen){
-    std::uniform_int_distribution<long> dist(min,max);
+
+int choice(int min, int max,std::mt19937 gen){
+    std::uniform_int_distribution<int> dist(min,max);
     return dist(gen);
 }
 
-//Initialize sectors map to fill with randomized numbers between 1 and 20
+//Initialize field map to fill with randomized numbers between 1 and 20
 std::map<int, int> sectors;
 
-//Create zone map associating each area number with its 3 neighbors
-std::tuple<int, int, int> zoneField(int areaNum){
+//Create field map associating each area number with its 3 neighbors
+std::tuple<int, int, int> populateField(int areaNum){
     if(areaNum == 1) return std::make_tuple(sectors[2], sectors[5], sectors[6]);
     if(areaNum == 2) return std::make_tuple(sectors[1], sectors[3], sectors[8]);
     if(areaNum == 3) return std::make_tuple(sectors[2], sectors[4], sectors[10]);
@@ -82,8 +85,8 @@ std::tuple<int, int, int> zoneField(int areaNum){
     else return std::make_tuple(sectors[15], sectors[16], sectors[19]);
     
 };
-//Zone map:
-//Area  Neighbors
+//Field map:
+//Sector  Neighbors
 //1 A    B, E, F
 //2 B    A, C, H
 //3 C    B, D, J
@@ -105,40 +108,75 @@ std::tuple<int, int, int> zoneField(int areaNum){
 //19S    M, R, T
 //20T    O, P, S
 
-//Create vector to hold numbers 1 through 20 to shuffle randomly for distribution
-//later; create vector to hold field area numbers
-std::vector<int> areas;
-std::vector<Field> fields;
-
-//Populate area numbers vector and fields vector
-for(int i = 0; i < 20; i++){
-    areas.push_back(i+1);
-    Field area(i+1);
-    fields.push_back(area);
-}
-
-//Randomly shuffle rooms 1-20, then push them to the area numbers map
-std::shuffle(areas.begin(), areas.end(), rand());
-for(int j = 0; j < 20; j++){
-    sectors[j+1] = areas[j];
-}
-
-//Create neighbor area for each field area using the zoneField map and the sectors
-//tuple.
-for(int k = 0; k < 20; k++){
-    int zone1, zone2, zone3;
-    std::tie(zone1, zone2, zone3) = zoneField(k+1);
-    fields[k].setWilson1(zone1);
-    fields[k].setWilson2(zone2);
-    fields[k].setWilson3(zone3);
-}
 
 
 void getAsmDirection(){
-    std::cout << "\n" << verbs(choice(0,5)) << " " << equip(choice(0,9)) << " " << objectives(choice(0,5)) << "\n" << std::endl;
+    std::cout << "\n" << verbs(choice(0,5,PRNG())) << " " << equip(choice(0,9,PRNG())) << " " << objectives(choice(0,5,PRNG())) << "\n" << std::endl;
 }
 
 void game(Player you){
+    
+    //Create Calvinball and zones to distribute on map
+    Calvinball gameBall;
+    Zones invisible(1);
+    Zones vortex(2);
+    Zones noSong(3);
+    Zones corollary(4);
+    
+    //Create vector to hold numbers 1 through 20 to shuffle randomly for distribution
+    //later; create vector to hold field area numbers
+    std::vector<int> areas;
+    std::vector<Field> fields;
+
+    //Populate area numbers vector and fields vector
+    for(int i = 0; i < 20; i++){
+        areas.push_back(i+1);
+        Field area(i+1);
+        fields.push_back(area);
+    }
+
+    //Randomly shuffle rooms 1-20, then push them to the sector numbers map
+    std::shuffle(areas.begin(), areas.end(), PRNG());
+    for(int j = 0; j < 20; j++){
+        sectors[j+1] = areas[j];
+    }
+
+    //Create neighbor area for each field area using the zoneField map and the sectors
+    //tuple.
+    for(int k = 0; k < 20; k++){
+        int zone1, zone2, zone3;
+        std::tie(zone1, zone2, zone3) = populateField(k+1);
+        fields[k].setWilson1(zone1);
+        fields[k].setWilson2(zone2);
+        fields[k].setWilson3(zone3);
+    }
+        
+    //Set starting area for Calvinball and various sectors and zones
+    while(gameBall.getBallZone()==0 ||
+          gameBall.getBallZone() == you.getPlayerSector())
+        gameBall.setBallZone(choice(1,20,PRNG()));
+    while(vortex.getZoneArea() == 0 ||
+          vortex.getZoneArea() == gameBall.getBallZone() ||
+          vortex.getZoneArea() == you.getPlayerSector())
+        vortex.setZoneArea(choice(1,20,PRNG()));
+    while(noSong.getZoneArea() == 0 ||
+          noSong.getZoneArea() == you.getPlayerSector() ||
+          noSong.getZoneArea() == gameBall.getBallZone() ||
+          noSong.getZoneArea() == vortex.getZoneArea())
+        noSong.setZoneArea(choice(1,20,PRNG()));
+    while(invisible.getZoneArea() == 0 ||
+          invisible.getZoneArea() == you.getPlayerSector() ||
+          invisible.getZoneArea() == gameBall.getBallZone() ||
+          invisible.getZoneArea() == vortex.getZoneArea() ||
+          invisible.getZoneArea() == noSong.getZoneArea())
+        invisible.setZoneArea(choice(1,20,PRNG()));
+    while(corollary.getZoneArea() == 0 ||
+          corollary.getZoneArea() == you.getPlayerSector() ||
+          corollary.getZoneArea() == gameBall.getBallZone() ||
+          corollary.getZoneArea() == vortex.getZoneArea() ||
+          corollary.getZoneArea() == noSong.getZoneArea() ||
+          corollary.getZoneArea() == invisible.getZoneArea())
+        corollary.setZoneArea(choice(1,20,PRNG()));
     long select = 0;
     std::string gEntry;
     getAsmDirection();
@@ -194,7 +232,7 @@ void game(Player you){
 }
 
 int main(){
-    Player you;
+    Player you(choice(1,20,PRNG()));
     std::cout << "Welcome to Calvinball! \n";
     menu();
     

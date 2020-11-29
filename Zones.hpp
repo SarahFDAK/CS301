@@ -7,7 +7,7 @@
 class Zones {
     int _zoneArea = 0;
     
-    //bats are type 1, pits are type 2
+    //Zones: 1 - Invisible Sector; 2 - Vortex Spot; 3 - No Song Zone; 4 - Corollary Zone
     int _type;
   
 public:
