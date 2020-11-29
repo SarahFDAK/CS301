@@ -65,6 +65,7 @@ std::mt19937 PRNG(){
     return gen;
 }
 
+//Use mt19937 to generate a random number within entered range
 int choice(int min, int max,std::mt19937 gen){
     std::uniform_int_distribution<int> dist(min,max);
     return dist(gen);
@@ -124,23 +125,26 @@ std::tuple<int, int, int> populateField(int areaNum){
 //20T    O, P, S
 
 
-
+//Read information from ASM verbs, equipment, and objectives files
 void getAsmDirection(){
     std::cout << "\n" << verbs(choice(0,5,PRNG())) << " " << equip(choice(0,9,PRNG())) << " " << objectives(choice(0,5,PRNG())) << "\n" << std::endl;
 }
 
+//Check if user entered a number, opposite, or boomerang
 int gameChoice(std::string gEntry){
     int option;
     std::istringstream gameString(gEntry);
     if(gameString >> option) return option;
+    else if(gEntry == "opposite") return 6;
+    else if(gEntry == "boomerang") return 7;
     else{
-        std::cout << "You were supposed to enter a number. I guess I'll decide for you." << std::endl;
+        std::cout << "THAT wasn't an option! I guess I'll decide for you." << std::endl;
         return choice(1, 5, PRNG());
     }
 }
 
 void game(Player you){
-    
+    //Simplify assigning points
     int setPoints = choice(0,12,PRNG());
     
     //Create Calvinball and zones to distribute on map
