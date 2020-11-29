@@ -180,7 +180,9 @@ void game(Player you){
     long select = 0;
     std::string gEntry;
     getAsmDirection();
-    do{
+    
+    
+    /*do{
         std::cout << "Make a selection:\n" <<
                      "1) Move left\n" <<
                      "2) Move Right\n" <<
@@ -228,7 +230,7 @@ void game(Player you){
         }
         else std::cout << "\nPlease choose 1-5 or enter -1 to quit.\n" << std::endl;
     }while(select != -1);
-    std::cout << "Thanks for playing!" << std::endl;
+    std::cout << "Thanks for playing!" << std::endl;*/
 }
 
 int main(){
