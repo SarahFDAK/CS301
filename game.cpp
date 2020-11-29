@@ -141,6 +141,8 @@ int gameChoice(std::string gEntry){
 
 void game(Player you){
     
+    int setPoints = choice(0,12,PRNG());
+    
     //Create Calvinball and zones to distribute on map
     Calvinball gameBall;
     Zones invisible(1);
@@ -205,6 +207,8 @@ void game(Player you){
     int select = 0;
     std::string gEntry;
     getAsmDirection();
+    std::string youPoint = "zip";
+    std::string opponentPoint = "nada";
     
     //Set Field object to allow for shorter member function calls
     Field nextDoor = fields[you.getPlayerSector()-1];
@@ -221,7 +225,9 @@ void game(Player you){
             select = gameChoice(gEntry);
             if(select == 1){
                 int hit = choice(0,1,PRNG());
-                if(hit) std::cout << "Got 'em!! The score is now " << points(choice(0,12,PRNG())) << " to " << points(choice(0,12,PRNG())) << std::endl;
+                if(hit){ youPoint = points(setPoints);
+                    std::cout << "Got 'em!! The score is now " << youPoint << " to " << opponentPoint << std::endl;
+                }
                 else std::cout << "MISSED..." << std::endl;
                 you.setPossession(0);
                 gameBall.setBallZone(areaNum);
@@ -252,11 +258,14 @@ void game(Player you){
                     default: break;
                 }
             }
-            if(myZone == vortex.getZoneArea()){
-                std::cout << "You're in the Vortex Spot! Now you have to spin around until you fall down!"
-            } || myZone == invisible.getZoneArea() ||
-                    myZone == noSong.getZoneArea() || myZone == corollary.getZoneArea()){
-                
+            if(myZone == vortex.getZoneArea() || myZone == invisible.getZoneArea() ||
+               myZone == noSong.getZoneArea() || myZone == corollary.getZoneArea()){
+                int uhoh = choice(1,4,PRNG());
+                switch(uhoh){
+                    case 1: std::cout << "You just ran into the Invisible Sector! Cover your eyes until you're out of it because everything " <<
+                        "is invisible to you. And you're only out when you're hit with the Calvinball! BWAHAHAHAHA!" << std::endl;
+                        
+                }
             }
             "Choose a sector to enter, "
             
