@@ -13,3 +13,7 @@ void Zones::setZoneArea(const int area){
 int Zones::getZoneArea() const {
     return _zoneArea;
 };
+
+int Zones::getZoneType() const {
+    return _type;
+}

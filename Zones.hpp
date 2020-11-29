@@ -16,6 +16,7 @@ public:
     void setZoneArea(const int area);
     
     int getZoneArea() const;
+    int getZoneType() const;
 };
 
-#endif /* Hazards_hpp */
+#endif 
