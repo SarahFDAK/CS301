@@ -207,10 +207,7 @@ void game(Player you){
     Field nextDoor = fields[you.getPlayerSector()-1];
     
     do{
-        std::cout << "You are in area " << you.getPlayerSector() <<". Neighboring sectors are: " <<
-        nextDoor.getWilson1() << ", " <<
-        nextDoor.getWilson2() << ", and" <<
-        nextDoor.getWilson3() << ".\n";
+        int myZone = you.getPlayerSector();
         if(you.getPossession() == 1){
             std::cout << "You have the Calvinball! Do you want to: \n" <<
             "1 - Throw it at your opponent\n" <<
@@ -231,6 +228,33 @@ void game(Player you){
                 while(you.getPlayerSector() == where) you.setPlayerSector(choice(1,20,PRNG()));
             }
             else continue;
+        }
+        else{
+            std::cout << "You are in area " << you.getPlayerSector() <<". Neighboring sectors are: " <<
+            nextDoor.getWilson1() << ", " <<
+            nextDoor.getWilson2() << ", and" <<
+            nextDoor.getWilson3() << ".\n" <<
+            if(myZone == gameBall.getBallZone()){
+                std::cout << "Look! The Calvinball!!" << std::endl;
+                int WHAT = choice(1,3,PRNG());
+                switch(WHAT){
+                    case 1: std::cout << "You GOT it! RUN!" << std::endl;
+                            you.setPossession(1);
+                            break;
+                    case 2: std::cout << "SHOOT! You kicked it away!" << std::endl;
+                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(choice(1,20,PRNG()));
+                            break;
+                    case 3: std::cout << "Whaddaya MEAN you don't want the Calvinball?? Fine... carry on..." << std::endl;
+                            break;
+                    default: break;
+                }
+            }
+            else if(myZone == vortex.getZoneArea() || myZone == invisible.getZoneArea() ||
+                    myZone == noSong.getZoneArea() || myZone == corollary.getZoneArea()){
+                
+            }
+            "Choose a sector to enter, "
+            
         }
         
         /*std::cout << "Make a selection:\n" <<
