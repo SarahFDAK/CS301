@@ -70,6 +70,9 @@ int choice(int min, int max,std::mt19937 gen){
     return dist(gen);
 }
 
+//Set as global variable so I don't have to type the full choice etc etc every time I have to set a new area for something.
+int areaNum = choice(1,20,PRNG());
+
 //Initialize field map to fill with randomized numbers between 1 and 20
 std::map<int, int> sectors;
 
@@ -176,29 +179,29 @@ void game(Player you){
     //Set starting area for Calvinball and various sectors and zones
     while(gameBall.getBallZone()==0 ||
           gameBall.getBallZone() == you.getPlayerSector())
-        gameBall.setBallZone(choice(1,20,PRNG()));
+        gameBall.setBallZone(areaNum);
     while(vortex.getZoneArea() == 0 ||
           vortex.getZoneArea() == gameBall.getBallZone() ||
           vortex.getZoneArea() == you.getPlayerSector())
-        vortex.setZoneArea(choice(1,20,PRNG()));
+        vortex.setZoneArea(areaNum);
     while(noSong.getZoneArea() == 0 ||
           noSong.getZoneArea() == you.getPlayerSector() ||
           noSong.getZoneArea() == gameBall.getBallZone() ||
           noSong.getZoneArea() == vortex.getZoneArea())
-        noSong.setZoneArea(choice(1,20,PRNG()));
+        noSong.setZoneArea(areaNum);
     while(invisible.getZoneArea() == 0 ||
           invisible.getZoneArea() == you.getPlayerSector() ||
           invisible.getZoneArea() == gameBall.getBallZone() ||
           invisible.getZoneArea() == vortex.getZoneArea() ||
           invisible.getZoneArea() == noSong.getZoneArea())
-        invisible.setZoneArea(choice(1,20,PRNG()));
+        invisible.setZoneArea(areaNum);
     while(corollary.getZoneArea() == 0 ||
           corollary.getZoneArea() == you.getPlayerSector() ||
           corollary.getZoneArea() == gameBall.getBallZone() ||
           corollary.getZoneArea() == vortex.getZoneArea() ||
           corollary.getZoneArea() == noSong.getZoneArea() ||
           corollary.getZoneArea() == invisible.getZoneArea())
-        corollary.setZoneArea(choice(1,20,PRNG()));
+        corollary.setZoneArea(areaNum);
     int select = 0;
     std::string gEntry;
     getAsmDirection();
@@ -221,11 +224,11 @@ void game(Player you){
                 if(hit) std::cout << "Got 'em!! The score is now " << points(choice(0,12,PRNG())) << " to " << points(choice(0,12,PRNG())) << std::endl;
                 else std::cout << "MISSED..." << std::endl;
                 you.setPossession(0);
-                gameBall.setBallZone(choice(1,20,PRNG()));
+                gameBall.setBallZone(areaNum);
             }
             else if(select == 2){
                 int where = you.getPlayerSector();
-                while(you.getPlayerSector() == where) you.setPlayerSector(choice(1,20,PRNG()));
+                while(you.getPlayerSector() == where) you.setPlayerSector(areaNum);
             }
             else continue;
         }
@@ -242,7 +245,7 @@ void game(Player you){
                             you.setPossession(1);
                             break;
                     case 2: std::cout << "SHOOT! You kicked it away!" << std::endl;
-                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(choice(1,20,PRNG()));
+                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(areaNum);
                             break;
                     case 3: std::cout << "Whaddaya MEAN you don't want the Calvinball?? Fine... carry on..." << std::endl;
                             break;
@@ -308,7 +311,7 @@ void game(Player you){
 }
 
 int main(){
-    Player you(choice(1,20,PRNG()));
+    Player you(areaNum);
     std::cout << "Welcome to Calvinball! \n";
     menu();
     
