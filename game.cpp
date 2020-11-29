@@ -236,7 +236,7 @@ void game(Player you){
             std::cout << "You are in area " << you.getPlayerSector() <<". Neighboring sectors are: " <<
             nextDoor.getWilson1() << ", " <<
             nextDoor.getWilson2() << ", and" <<
-            nextDoor.getWilson3() << ".\n" <<
+            nextDoor.getWilson3() << ".\n";
             if(myZone == gameBall.getBallZone()){
                 std::cout << "Look! The Calvinball!!" << std::endl;
                 int WHAT = choice(1,3,PRNG());
@@ -252,7 +252,9 @@ void game(Player you){
                     default: break;
                 }
             }
-            else if(myZone == vortex.getZoneArea() || myZone == invisible.getZoneArea() ||
+            if(myZone == vortex.getZoneArea()){
+                std::cout << "You're in the Vortex Spot! Now you have to spin around until you fall down!"
+            } || myZone == invisible.getZoneArea() ||
                     myZone == noSong.getZoneArea() || myZone == corollary.getZoneArea()){
                 
             }
@@ -327,6 +329,8 @@ int main(){
             }
             if(menuChoice == 2){
                 std::cout << "The only rule is that you can't play it the same way twice!\n" <<
+                             "If you get caught in one of the Problem Sectors, you can type \"opposite\" or \"boomerang\" once " <<
+                             "a game to get out of it." << std::endl;
                              "Make a choice:\n" <<
                              "User Input: " << std::endl;
                 continue;
