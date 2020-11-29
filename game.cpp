@@ -211,8 +211,8 @@ void game(Player you){
         nextDoor.getWilson1() << ", " <<
         nextDoor.getWilson2() << ", and" <<
         nextDoor.getWilson3() << ".\n";
-        if(you.getPossession() = 1){
-            std::cout << "You have the Calvinball! Do you want to: \n" ,,
+        if(you.getPossession() == 1){
+            std::cout << "You have the Calvinball! Do you want to: \n" <<
             "1 - Throw it at your opponent\n" <<
             "2 - Run for the Randomizer Tree\n" <<
             "3 - Fall down and play dead\n" <<
@@ -223,7 +223,7 @@ void game(Player you){
                 int hit = choice(0,1,PRNG());
                 if(hit) std::cout << "Got 'em!! The score is now " << points(choice(0,12,PRNG())) << " to " << points(choice(0,12,PRNG())) << std::endl;
                 else std::cout << "MISSED..." << std::endl;
-                you.setPossession = 0;
+                you.setPossession(0);
                 gameBall.setBallZone(choice(1,20,PRNG()));
             }
             else if(select == 2){
