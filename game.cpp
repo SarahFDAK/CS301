@@ -126,6 +126,16 @@ void getAsmDirection(){
     std::cout << "\n" << verbs(choice(0,5,PRNG())) << " " << equip(choice(0,9,PRNG())) << " " << objectives(choice(0,5,PRNG())) << "\n" << std::endl;
 }
 
+int gameChoice(std::string gEntry){
+    int option;
+    std::istringstream gameString(gEntry);
+    if(gameString >> option) return option;
+    else{
+        std::cout << "You were supposed to enter a number. I guess I'll decide for you." << std::endl;
+        return choice(1, 5, PRNG());
+    }
+}
+
 void game(Player you){
     
     //Create Calvinball and zones to distribute on map
@@ -153,7 +163,7 @@ void game(Player you){
         sectors[j+1] = areas[j];
     }
 
-    //Create neighbor area for each field area using the zoneField map and the sectors
+    //Create neighbor area for each field area using the sectors map and the populateField
     //tuple.
     for(int k = 0; k < 20; k++){
         int zone1, zone2, zone3;
@@ -193,7 +203,36 @@ void game(Player you){
     std::string gEntry;
     getAsmDirection();
     
+    //Set Field object to allow for shorter member function calls
+    Field nextDoor = fields[you.getPlayerSector()-1];
+    
     do{
+        std::cout << "You are in area " << you.getPlayerSector() <<". Neighboring sectors are: " <<
+        nextDoor.getWilson1() << ", " <<
+        nextDoor.getWilson2() << ", and" <<
+        nextDoor.getWilson3() << ".\n";
+        if(you.getPossession() = 1){
+            std::cout << "You have the Calvinball! Do you want to: \n" ,,
+            "1 - Throw it at your opponent\n" <<
+            "2 - Run for the Randomizer Tree\n" <<
+            "3 - Fall down and play dead\n" <<
+            "Player Choice: " << std::endl;
+            std::getline(std::cin, gEntry);
+            select = gameChoice(gEntry);
+            if(select == 1){
+                int hit = choice(0,1,PRNG());
+                if(hit) std::cout << "Got 'em!! The score is now " << points(choice(0,12,PRNG())) << " to " << points(choice(0,12,PRNG())) << std::endl;
+                else std::cout << "MISSED..." << std::endl;
+                you.setPossession = 0;
+                gameBall.setBallZone(choice(1,20,PRNG()));
+            }
+            else if(select == 2){
+                int where = you.getPlayerSector();
+                while(you.getPlayerSector() == where) you.setPlayerSector(choice(1,20,PRNG()));
+            }
+            else continue;
+        }
+        
         /*std::cout << "Make a selection:\n" <<
                      "1) Move left\n" <<
                      "2) Move Right\n" <<
