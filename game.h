@@ -33,6 +33,8 @@ public:
 
     int event(const Field& field, Zones& invisible, Zones& vortex,
               Zones& noSong, Zones& corollary, Calvinball& gameBall);
+    int eventOpponent(const Field& field, Zones& invisible, Zones& vortex,
+              Zones& noSong, Zones& corollary, Calvinball& gameBall);
     int getPossession() const;
     int getOppPoleUse() const;
     int getBoomerangUse() const;

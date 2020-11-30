@@ -172,8 +172,17 @@ void game(Player you){
           corollary.getZoneArea() == noSong.getZoneArea() ||
           corollary.getZoneArea() == invisible.getZoneArea())
         corollary.setZoneArea(sectorNum());
+    while(you.getOpponenSector()==0) ||
+          you.getOpponenSector()== you.getPlayerSector() ||
+          you.getOpponenSector()== gameBall.getBallZone() ||
+          you.getOpponenSector()== vortex.getZoneArea() ||
+          you.getOpponenSector()== noSong.getZoneArea() ||
+          you.getOpponenSector()== invisible.getZoneArea() ||
+          you.getOpponenSector()== corollary.getZoneArea())
+        you.setOpponentSector(sectorNum());
     
-    
+    you.setPlayerFlag(you.getPlayerSector());
+    you.setOpponentFlag(you.getOpponenSector());
     
     //initialize variables to be used in the game
     int select = 0;
@@ -249,7 +258,7 @@ void game(Player you){
                                             while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
                                         }
                                         else{
-                                            std::cout << "\nThe missed! The ball flew into another sector.\n" << std::endl;
+                                            std::cout << "\nThey missed! The ball flew into another sector.\n" << std::endl;
                                             while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
                                         }
                                             break;
@@ -257,6 +266,44 @@ void game(Player you){
                         }
             }
             you.move(nextDoor);
+            
+            int action = you.eventOpponent(nextDoor, invisible, vortex, noSong, corollary, gameBall);
+            switch(action){
+                case 1: you.setOpponentSector(sectorNum());
+                    continue;
+                case 2: break;
+                case 3: playerPoint = points(setPoints());
+                    break;
+                case 4: break;
+                case 5: if(you.getOpponentSector() == gameBall.getBallZone()){
+                                int WHAT = choice(1,3,PRNG());
+                                switch(WHAT){
+                                    case 1: std::cout << "\nThey got it! RUN!\n" << std::endl;
+                                        if(choice(0,1,PRNG())==1){
+                                            std::cout << "Oh MAN, they hit you with it!\n" << std::endl;
+                                            opponentPoint = points(setPoints());
+                                        }
+                                        else std::cout << "HA! They MISSED!\n" << std::endl;
+                                            break;
+                                    case 2: std::cout << "\nHA! They kicked it away!\n" << std::endl;
+                                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
+                                            break;
+                                    case 3: std::cout << "\nYou got it away from them!!\n" << std::endl;
+                                        if(choice(0,1,PRNG()) == 1){
+                                            std::cout << "\nYou got them with the ball!\n" << std::endl;
+                                            playerPoint = points(setPoints());
+                                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
+                                        }
+                                        else{
+                                            std::cout << "\nYou missed! The ball flew into another sector.\n" << std::endl;
+                                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
+                                        }
+                                            break;
+                                }
+                        }
+            }
+            //Move opponent randomly
+            you.setOpponentSector(sectorNum());
             
             std::cout << "Enter to continue or -1 to quit: " << std::endl;
             std::getline(std::cin, gEntry);

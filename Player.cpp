@@ -133,6 +133,49 @@ int Player::event(const Field& field, Zones& invisible, Zones& vortex,
     }
     return 6;
 }
+
+int eventOpponent(const Field& field, Zones& invisible, Zones& vortex,
+                  Zones& noSong, Zones& corollary, Calvinball& gameBall){
+    if(field.getArea() == corollary.getZoneArea()){
+        if(corollary.getZoneUse() == 0){
+            std::cout << "\nFor some reason, a giant bat grabbed your and carried them off! I don't know what that has to do with the corollary zone...\n" << std::endl;
+            corollary.setZoneUsed();
+            return 1;
+        }
+        else return 6;
+    }
+    else if(field.getArea() == noSong.getZoneArea()){
+        if(noSong.getZoneUse() == 0){
+            std::cout << "\nYour opponent is in the No Song Zone. Thank goodness we don't have to listen to them sing...?\n" << std::endl;
+            noSong.setZoneUsed();
+            return 2;
+        }
+        else return 6;
+    }
+    else if(field.getArea() == invisible.getZoneArea()){
+        if(invisible.getZoneUse() == 0){
+            std::cout << "\nYour opponent just ran into the Invisible Sector! They have to cover their eyes until they're out of it because everything " <<
+                "is invisible to them. Hit them with the Calvinball! BWAHAHAHAHA!\n" << std::endl;
+            invisible.setZoneUsed();
+            return 3;
+        }
+        else return 6;
+    }
+    else if(field.getArea() == vortex.getZoneArea()){
+        if(vortex.getZoneUse() == 0){
+            std::cout << "\nYour opponent is in the Vortex Spot - now they have to spin around until they fall down.\n" << std::endl;
+            vortex.setZoneUsed();
+            return 4;
+        }
+        else return 6;
+    }
+    else if(field.getArea() == gameBall.getBallZone()){
+        std::cout << "Oh no! Your opponent sees the Calvinball!!" << std::endl;
+        return 5;
+    }
+    return 6;
+}
+    
 /*
 //Shoot function 
 void Explorer::shoot(Cave& cave, Wumpus &wompa){
