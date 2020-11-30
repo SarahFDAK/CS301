@@ -63,7 +63,9 @@ int Player::getBoomerangUse() const{
     return _boomerang;
 };
 
+//Member function to move player around the field
 void Player::move(const Field& field){
+    //List neighboring areas
     std::cout << "Choose a sector to enter: " <<
                 field.getWilson1() << ", " <<
                 field.getWilson2() << ", or " <<
@@ -73,6 +75,7 @@ void Player::move(const Field& field){
     while(true){
         std::getline(std::cin, newRoom);
         std::istringstream iss(newRoom);
+        //Check if user entry is an integer and if it matches one of the listed neighbors. If so, move player to new area.
         if(iss >> choice){
             if(choice == field.getWilson1()){
                 _playerZone = field.getWilson1();
@@ -92,6 +95,8 @@ void Player::move(const Field& field){
     }
 };
 
+//Member function to check player location relative to various Zones, opponent flag, and the Calvinball
+//Sets each zone to "used" once the player or opponent has encountered it so each appears once/game
 int Player::event(const Field& field, Zones& invisible, Zones& vortex,
                     Zones& noSong, Zones& corollary, Calvinball &gameBall){
     if(field.getArea() == corollary.getZoneArea()){
@@ -138,11 +143,14 @@ int Player::event(const Field& field, Zones& invisible, Zones& vortex,
     return 6;
 }
 
+//Member function to check opponent location relative to various Zones, player flag, and the Calvinball
+//Sets each zone to "used" once the player or opponent has encountered it so each appears once/game
 int Player::eventOpponent(const Field& field, Zones& invisible, Zones& vortex,
                   Zones& noSong, Zones& corollary, Calvinball& gameBall){
     if(field.getArea() == corollary.getZoneArea()){
         if(corollary.getZoneUse() == 0){
-            std::cout << "\nFor some reason, a giant bat grabbed your and carried them off! I don't know what that has to do with the corollary zone...\n" << std::endl;
+            std::cout << "\nFor some reason, a giant bat grabbed your opponent and carried them off! " <<
+                         "I don't know what that has to do with the corollary zone...\n" << std::endl;
             corollary.setZoneUsed();
             return 1;
         }
@@ -180,102 +188,3 @@ int Player::eventOpponent(const Field& field, Zones& invisible, Zones& vortex,
     else if(field.getArea() == _playerFlag) return 7;
     return 6;
 }
-    
-/*
-//Shoot function 
-void Explorer::shoot(Cave& cave, Wumpus &wompa){
-    if(_arrows == 0)
-        std::cout << "Sorry, you're out of arrows...\n";
-    std::cout << "Which room do you want to shoot into?\n" << cave.getWilson1() <<
-                ", " << cave.getWilson2() << ", " << cave.getWilson3() << std::endl;
-    std::string input;
-    int choice;
-//    int count = 0;
-    std::cin.ignore();
-    std::getline(std::cin, input);
-    std::istringstream iss(input);
-//    while(count < 3){
-    //check if user input is an integer
-        if(iss >> choice){
-            //check which neighboring cave it went to and see if the wumpus is there
-            if(choice == cave.getWilson1()){
-                if(wompa.getWumpRoom() == cave.getWilson1()){
-                    wompa.setWumpLife(false);
-                    std::cout << "You got the Wumpus! Congrats!\n";
-                }
-                //if the wumpus is in a different connected room, wake it up and
-                //move it and decrease arrow count
-                else if(wompa.getWumpRoom() == cave.getWilson2() ||
-                        wompa.getWumpRoom() == cave.getWilson3()){
-                    std::cout << "You woke up the Wumpus...\n";
-                    wompa.moveWumpus(1, 20);
-                    _arrows--;
-                    //count ++;
-                }
-                //Else just lose an arrow
-                else{
-                    std::cout << "You didn't hit anything...\n";
-                    _arrows--;
-                }
-            }
-            else if(choice == cave.getWilson2()){
-                if(wompa.getWumpRoom() == cave.getWilson2()){
-                    wompa.setWumpLife(false);
-                    std::cout << "You got the Wumpus! Congrats!\n";
-                }
-                else if(wompa.getWumpRoom() == cave.getWilson1() ||
-                        wompa.getWumpRoom() == cave.getWilson3()){
-                    std::cout << "You woke up the Wumpus...\n";
-                    wompa.moveWumpus(1, 20);
-                    _arrows--;
-                    //count ++;
-                }
-                else{
-                    std::cout << "You didn't hit anything...\n";
-                    _arrows--;
-                }
-            }
-            else if(choice == cave.getWilson3()){
-                if(wompa.getWumpRoom() == cave.getWilson3()){
-                    wompa.setWumpLife(false);
-                    std::cout << "You got the Wumpus! Congrats!\n";
-                }
-                else if(wompa.getWumpRoom() == cave.getWilson1() ||
-                        wompa.getWumpRoom() == cave.getWilson2()){
-                    std::cout << "You woke up the Wumpus...\n";
-                    wompa.moveWumpus(1, 20);
-                    _arrows--;
-                    //count ++;
-                }
-                else{
-                    std::cout << "You didn't hit anything...\n";
-                    _arrows--;
-                }
-            }
-            else
-                std::cout << "That isn't one of the options...\n";
-        }
-//        std::cout << "Please enter a room number:\n";
-//        std::getline(std::cin, input);
-//    }
-    
-}
-    
-void Explorer::missed(const int usedArrow) {
-    if(_arrows > 1)
-        _arrows -= 1;
-    else
-        std::cout << "You are out of arrows. Better run away!\n";
-};
-
-int Explorer::getExplorerLife() const {
-    return _lifeStat;
-};
-int Explorer::getExplorerRoom() const {
-    return _yourRoom;
-};
-int Explorer::getArrowNum() const {
-    return _arrows;
-};
-*/
-
