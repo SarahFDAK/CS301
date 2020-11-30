@@ -11,6 +11,7 @@
 
 class Player {
     int _playerZone = 0; //Area of field where player is
+    int _opponentZone = 0;
     int _calvinBall = 0; //=1 if player possesses Calvinball
     int _playerFlag;
     int _opponentFlag;

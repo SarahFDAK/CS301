@@ -11,6 +11,10 @@ void Player::setPlayerSector(int sector){
     _playerZone = sector;
 };
 
+void Player::setOpponentSector(int sector){
+    _opponentZone = sector;
+}
+
 void Player::setPlayerFlag(int sector){
     _playerFlag = sector;
 }
@@ -34,6 +38,10 @@ void Player::setBoomerangUse(){
 int Player::getPlayerSector() const{
     return _playerZone;
 };
+
+int Player::getOpponentSector() const{
+    return _opponentZone;
+}
 
 int Player::getPossession() const{
     return _calvinBall;

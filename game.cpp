@@ -173,6 +173,8 @@ void game(Player you){
           corollary.getZoneArea() == invisible.getZoneArea())
         corollary.setZoneArea(sectorNum());
     
+    
+    
     //initialize variables to be used in the game
     int select = 0;
     std::string gEntry;
