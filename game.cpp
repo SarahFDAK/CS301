@@ -181,9 +181,9 @@ void game(Player you){
           you.getOpponentSector()== corollary.getZoneArea())
         you.setOpponentSector(sectorNum());
     
+    //Place flags
     you.setPlayerFlag(you.getPlayerSector());
     you.setOpponentFlag(you.getOpponentSector());
-    std::cout << "Your flag is in area: " << you.getPlayerFlag() << " and your opponent's is in area: " << you.getOpponentFlag() << ".\n" << std::endl;
 
     //initialize variables to be used in the game
     int select = 0;
@@ -202,7 +202,7 @@ void game(Player you){
         int myZone = you.getPlayerSector();
         Field nextDoor = fields[myZone-1];
         
-        
+        //Check for player possession of Calvinball
         if(you.getPossession() == 1){
             std::cout << "You have the Calvinball! Do you want to: \n" <<
             "1 - Throw it at your opponent\n" <<
@@ -211,16 +211,18 @@ void game(Player you){
             "Player Choice: ";
             std::getline(std::cin, gEntry);
             select = gameChoice(gEntry);
-            int hit = 0;
             switch(select){
-                case 1: hit = choice(0,1,PRNG());
-                        if(hit==1){ youPoint = points(setPoints());
+                //Give player 50/50 chance of hitting opponent with Calvinball
+                case 1: if(choice(0,1,PRNG())==1){
+                            youPoint = points(setPoints());
                             std::cout << "\nGot 'em!! The score is now " << youPoint << " to " << opponentPoint << "\n" << std::endl;
                         }
                         else std::cout << "\nMISSED...\n" << std::endl;
                         you.setPossession(0);
+                    //send the Calvinball to a random sector
                         gameBall.setBallZone(sectorNum());
                     break;
+                //send the player to a random sector via the Randomizer Tree
                 case 2: while(you.getPlayerSector() == myZone) you.setPlayerSector(sectorNum());
                     std::cout << "\nYou are now in area " << myZone << ".\n" << std::endl;
                     break;
@@ -230,12 +232,15 @@ void game(Player you){
             }
         }
         else{
+            //Give the player a random nonsensical direction
             getAsmDirection();
-
+            
+            //Report player location and what areas are neighboring
             std::cout << "\nYou are in area " << myZone <<". Neighboring sectors are: " <<
             nextDoor.getWilson1() << ", " <<
             nextDoor.getWilson2() << ", and " <<
             nextDoor.getWilson3() << ".\n";
+            //Player event returns an integer representing player relative to zones, the opponent's flag, and the Calvinball
             int action = you.event(nextDoor, invisible, vortex, noSong, corollary, gameBall);
             switch(action){
                 case 1: you.setPlayerSector(sectorNum());
@@ -244,10 +249,11 @@ void game(Player you){
                 case 3: opponentPoint = points(setPoints());
                     break;
                 case 4: break;
+                //Give the player a 50/50 chance to get the flag and win the game
                 case 7: if(choice(0,1,PRNG())==0){
                             std::cout << "\nYou got your opponent's flag! You win!\n" << std::endl;
                             select = -1;
-                            break;
+                            continue;
                             }
                         else{ std::cout << "\nYour opponent got your flag, but you tagged them with the Calvinball and now " <<
                                 "they have to put it back and sing the Very Sorry Song!\n" << std::endl;
@@ -256,6 +262,7 @@ void game(Player you){
                         }
                     break;
                 case 5: if(myZone == gameBall.getBallZone()){
+                                //Give the player a 1 in 3 chance to snag the Calvinball
                                 int WHAT = choice(1,3,PRNG());
                                 switch(WHAT){
                                     case 1: std::cout << "\nYou GOT it! RUN!\n" << std::endl;
@@ -265,6 +272,7 @@ void game(Player you){
                                             while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
                                             break;
                                     case 3: std::cout << "\nWhat?? Your opponent grabbed it!!\n" << std::endl;
+                                        //If the opponent grabs the Calvinball, give THEM a 50/50 chance of hitting the player with it
                                         if(choice(0,1,PRNG()) == 1){
                                             std::cout << "\nThey got you with the ball!\n" << std::endl;
                                             opponentPoint = points(setPoints());
@@ -278,8 +286,10 @@ void game(Player you){
                                 }
                         }
             }
+            //Give player the option to move to a new area
             you.move(nextDoor);
             if(select != -1){
+                //Give all the event options to the opponent as well
                 int actionOpponent = you.eventOpponent(you.getOpponentSector(), invisible, vortex, noSong, corollary, gameBall);
                 switch(actionOpponent){
                     case 1: you.setOpponentSector(sectorNum());
@@ -330,6 +340,7 @@ void game(Player you){
             //Move opponent randomly
             you.setOpponentSector(sectorNum());
             
+            //Give option to quit
             std::cout << "Enter to continue or -1 to quit: " << std::endl;
             std::getline(std::cin, gEntry);
             std::istringstream quit(gEntry);
@@ -337,16 +348,18 @@ void game(Player you){
                 if(select == -1) continue;
             }
         }
+        //Check which round we've reached - if it has incremented to 3, post the scores and reset round counter
         if(round >= 3){
             std::cout << "\nThe score is " << youPoint << " to " << opponentPoint << "\n"<< std::endl;
             round = 0;
             continue;
         }
-    }while(select != -1);
+    }while(select != -1); //End the game when player enters -1
     std::cout << "Thanks for playing!" << std::endl;
 }
 
 int main(){
+    //Initialize player and their location
     Player you(choice(1,20,PRNG()));
     std::cout << "Welcome to Calvinball! \n";
     menu();
@@ -363,8 +376,6 @@ int main(){
             }
             if(menuChoice == 2){
                 std::cout << "The only rule is that you can't play it the same way twice!\n" <<
-                             "If you get caught in one of the Problem Sectors, you can type \"opposite\" or \"boomerang\" once " <<
-                             "a game to get out of it.\n" <<
                              "Make a choice:\n" <<
                              "User Input: ";
                 continue;
