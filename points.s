@@ -3,6 +3,13 @@ global _points
 section .text
 
 _points:
+    mov rcx, rdi
+    lea rdx, [rel _opts]
+
+    mov rax, [rdx + 8*rcx]
+    ret
+
+_opts:
 	dq _point1
 	dq _point2
 	dq _point3
@@ -24,7 +31,7 @@ _point2:
 	db `boogy\0`
 
 _point3:
-	db 1
+	db `nerf\0`
 
 _point4:
 	db `abracadabra\0`

@@ -109,14 +109,6 @@ int setPoints(){
 
 void game(Player you){
     
-    std::cout << "In game" << std::endl;
-    //Set as global variable so I don't have to type the full choice etc etc every time I have to set a new area for something.
-    //int areaNum = choice(1,20,PRNG());
-    
-    //Simplify assigning points
-    //int setPoints = choice(0,12,PRNG());
-    std::cout << you.getPlayerSector() << std::endl;
-    
     //Create Calvinball and zones to distribute on map
     Calvinball gameBall;
     Zones invisible(1);
@@ -186,9 +178,11 @@ void game(Player you){
     
     int round = 0;
     
-    do{
+    std::cout << points(choice(0,12,PRNG())) << std::endl;
+    
+    
+    /*do{
         round++;
-        std::cout << "Round# " << round << std::endl;
         //Set Field object to allow for shorter member function calls
         Field nextDoor = fields[you.getPlayerSector()-1];
         int myZone = you.getPlayerSector();
@@ -197,7 +191,7 @@ void game(Player you){
             "1 - Throw it at your opponent\n" <<
             "2 - Run for the Randomizer Tree\n" <<
             "3 - Fall down and play dead\n" <<
-            "Player Choice: " << std::endl;
+            "Player Choice: ";
             std::getline(std::cin, gEntry);
             select = gameChoice(gEntry);
             if(select == 1){
@@ -215,7 +209,7 @@ void game(Player you){
             else continue;
         }
         else{
-            std::cout << "You are in area " << you.getPlayerSector() <<". Neighboring sectors are: " <<
+            std::cout << "\nYou are in area " << you.getPlayerSector() <<". Neighboring sectors are: " <<
             nextDoor.getWilson1() << ", " <<
             nextDoor.getWilson2() << ", and " <<
             nextDoor.getWilson3() << ".\n";
@@ -223,13 +217,13 @@ void game(Player you){
                 std::cout << "Look! The Calvinball!!" << std::endl;
                 int WHAT = choice(1,3,PRNG());
                 switch(WHAT){
-                    case 1: std::cout << "You GOT it! RUN!\n" << std::endl;
+                    case 1: std::cout << "\nYou GOT it! RUN!\n" << std::endl;
                             you.setPossession(1);
                             break;
-                    case 2: std::cout << "SHOOT! You kicked it away!\n" << std::endl;
+                    case 2: std::cout << "\nSHOOT! You kicked it away!\n" << std::endl;
                             while(gameBall.getBallZone() == you.getPlayerSector()) gameBall.setBallZone(sectorNum());
                             break;
-                    case 3: std::cout << "Whaddaya MEAN you don't want the Calvinball?? Fine... carry on...\n" << std::endl;
+                    case 3: std::cout << "\nWhaddaya MEAN you don't want the Calvinball?? Fine... carry on...\n" << std::endl;
                             break;
                 }
             }
@@ -261,7 +255,7 @@ void game(Player you){
             round = 0;
             continue;
         }
-    }while(select != -1);
+    }while(select != -1);*/
     std::cout << "Thanks for playing!" << std::endl;
 }
 
@@ -285,7 +279,7 @@ int main(){
                              "If you get caught in one of the Problem Sectors, you can type \"opposite\" or \"boomerang\" once " <<
                              "a game to get out of it.\n" <<
                              "Make a choice:\n" <<
-                             "User Input: " << std::endl;
+                             "User Input: ";
                 continue;
             }
             if(menuChoice == 3){
@@ -294,7 +288,7 @@ int main(){
             }
             else {
                 std::cout << "That isn't an option. Please make a choice.\n" <<
-                             "User Input: " << std::endl;
+                             "User Input: ";
                 continue;
             }
         }
