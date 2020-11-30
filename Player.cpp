@@ -134,7 +134,7 @@ int Player::event(const Field& field, Zones& invisible, Zones& vortex,
     return 6;
 }
 
-int eventOpponent(const Field& field, Zones& invisible, Zones& vortex,
+int Player::eventOpponent(const Field& field, Zones& invisible, Zones& vortex,
                   Zones& noSong, Zones& corollary, Calvinball& gameBall){
     if(field.getArea() == corollary.getZoneArea()){
         if(corollary.getZoneUse() == 0){

@@ -172,17 +172,17 @@ void game(Player you){
           corollary.getZoneArea() == noSong.getZoneArea() ||
           corollary.getZoneArea() == invisible.getZoneArea())
         corollary.setZoneArea(sectorNum());
-    while(you.getOpponenSector()==0) ||
-          you.getOpponenSector()== you.getPlayerSector() ||
-          you.getOpponenSector()== gameBall.getBallZone() ||
-          you.getOpponenSector()== vortex.getZoneArea() ||
-          you.getOpponenSector()== noSong.getZoneArea() ||
-          you.getOpponenSector()== invisible.getZoneArea() ||
-          you.getOpponenSector()== corollary.getZoneArea())
+    while(you.getOpponentSector()==0 ||
+          you.getOpponentSector()== you.getPlayerSector() ||
+          you.getOpponentSector()== gameBall.getBallZone() ||
+          you.getOpponentSector()== vortex.getZoneArea() ||
+          you.getOpponentSector()== noSong.getZoneArea() ||
+          you.getOpponentSector()== invisible.getZoneArea() ||
+          you.getOpponentSector()== corollary.getZoneArea())
         you.setOpponentSector(sectorNum());
     
     you.setPlayerFlag(you.getPlayerSector());
-    you.setOpponentFlag(you.getOpponenSector());
+    you.setOpponentFlag(you.getOpponentSector());
     
     //initialize variables to be used in the game
     int select = 0;
@@ -267,12 +267,12 @@ void game(Player you){
             }
             you.move(nextDoor);
             
-            int action = you.eventOpponent(nextDoor, invisible, vortex, noSong, corollary, gameBall);
-            switch(action){
+            int actionOpponent = you.eventOpponent(nextDoor, invisible, vortex, noSong, corollary, gameBall);
+            switch(actionOpponent){
                 case 1: you.setOpponentSector(sectorNum());
                     continue;
                 case 2: break;
-                case 3: playerPoint = points(setPoints());
+                case 3: youPoint = points(setPoints());
                     break;
                 case 4: break;
                 case 5: if(you.getOpponentSector() == gameBall.getBallZone()){
@@ -291,7 +291,7 @@ void game(Player you){
                                     case 3: std::cout << "\nYou got it away from them!!\n" << std::endl;
                                         if(choice(0,1,PRNG()) == 1){
                                             std::cout << "\nYou got them with the ball!\n" << std::endl;
-                                            playerPoint = points(setPoints());
+                                            youPoint = points(setPoints());
                                             while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
                                         }
                                         else{
