@@ -10,6 +10,7 @@ void Zones::setZoneArea(const int area){
     _zoneArea = area;
 }
 
+//Marks zone as used so it won't appear again in the same game
 void Zones::setZoneUsed(){
     _used = 1;
 }
