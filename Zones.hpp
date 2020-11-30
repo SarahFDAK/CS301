@@ -8,15 +8,18 @@ class Zones {
     
     //Zones: 1 - Invisible Sector; 2 - Vortex Spot; 3 - No Song Zone; 4 - Corollary Zone
     int _type;
+    int _used = 0;
   
 public:
     Zones();
     Zones(int type);
     
     void setZoneArea(const int area);
+    void setZoneUsed();
     
     int getZoneArea() const;
     int getZoneType() const;
+    int getZoneUse() const;
 };
 
 #endif 

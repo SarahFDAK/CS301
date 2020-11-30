@@ -91,8 +91,8 @@ int gameChoice(std::string gEntry){
     int option;
     std::istringstream gameString(gEntry);
     if(gameString >> option) return option;
-    //else if(gEntry == "opposite") return 6;
-    //else if(gEntry == "boomerang") return 7;
+    else if(gEntry == "opposite") return 6;
+    else if(gEntry == "boomerang") return 7;
     else{
         std::cout << "THAT wasn't an option! I guess I'll decide for you." << std::endl;
         return choice(1, 5, PRNG());
@@ -219,21 +219,29 @@ void game(Player you){
             nextDoor.getWilson1() << ", " <<
             nextDoor.getWilson2() << ", and " <<
             nextDoor.getWilson3() << ".\n";
-            if(myZone == gameBall.getBallZone()){
-                std::cout << "Look! The Calvinball!!" << std::endl;
-                int WHAT = choice(1,3,PRNG());
-                switch(WHAT){
-                    case 1: std::cout << "\nYou GOT it! RUN!\n" << std::endl;
-                            you.setPossession(1);
-                            break;
-                    case 2: std::cout << "\nSHOOT! You kicked it away!\n" << std::endl;
-                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
-                            break;
-                    case 3: std::cout << "\nWhaddaya MEAN you don't want the Calvinball?? Fine... carry on...\n" << std::endl;
-                            break;
-                }
+            int action = you.event(nextDoor, invisible, vortex, noSong, corollary, gameBall);
+            switch(action){
+                case 1: you.setPlayerSector(sectorNum());
+                    continue;
+                case 2: break;
+                case 3: opponentPoint = points(setPoints());
+                    break;
+                case 4: break;
+                case 5: if(myZone == gameBall.getBallZone()){
+                                int WHAT = choice(1,3,PRNG());
+                                switch(WHAT){
+                                    case 1: std::cout << "\nYou GOT it! RUN!\n" << std::endl;
+                                            you.setPossession(1);
+                                            break;
+                                    case 2: std::cout << "\nSHOOT! You kicked it away!\n" << std::endl;
+                                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
+                                            break;
+                                    case 3: std::cout << "\nWhaddaya MEAN you don't want the Calvinball?? Fine... carry on...\n" << std::endl;
+                                            break;
+                                }
+                        }
             }
-            if(myZone == vortex.getZoneArea() || myZone == invisible.getZoneArea() ||
+            /*if(myZone == vortex.getZoneArea() || myZone == invisible.getZoneArea() ||
                myZone == noSong.getZoneArea() || myZone == corollary.getZoneArea()){
                 int uhoh = choice(1,4,PRNG());
                 switch(uhoh){
@@ -246,7 +254,7 @@ void game(Player you){
                     case 3: std::cout << "No song zone" << std::endl;
                     case 4: std::cout << "Corollary zone" << std::endl;
                 }
-            }
+            }*/
             you.move(nextDoor);
             
             std::cout << "Enter to continue or -1 to quit: " << std::endl;

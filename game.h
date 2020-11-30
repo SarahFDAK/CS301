@@ -25,8 +25,8 @@ public:
     void setBoomerangUse(); //change to 1 if player has called Boomerang Zone
     void move(const Field& field);
 
-    int event(const Field& field, const Zones& invisible, const Zones& vortex,
-               const Zones& noSong, const Zones& corollary, Calvinball& gameBall);
+    int event(const Field& field, Zones& invisible, Zones& vortex,
+              Zones& noSong, Zones& corollary, Calvinball& gameBall);
     int getPossession() const;
     int getOppPoleUse() const;
     int getBoomerangUse() const;

@@ -68,27 +68,48 @@ void Player::move(const Field& field){
     }
 };
 
-/*int Explorer::event(const Cave& cave, const Hazards& bat1, const Hazards& bat2,
-                     const Hazards& pit1, const Hazards &pit2, Wumpus &wompa){
-    if(cave.getRoom() == bat1.getHazardRoom() ||
-       cave.getRoom() == bat2.getHazardRoom()){
-        std::cout << "A giant bat grabbed you and carried you off!\n";
-        while(_yourRoom == cave.getRoom())
-            _yourRoom = randInt(1, 20);
-        return 1;
+int Player::event(const Field& field, Zones& invisible, Zones& vortex,
+                    Zones& noSong, Zones& corollary, Calvinball &gameBall){
+    if(field.getArea() == corollary.getZoneArea()){
+        if(corollary.getZoneUse() == 0){
+            std::cout << "\nFor some reason, a giant bat grabbed you and carried you off! I don't know what that has to do with the corollary zone...\n" << std::endl;
+            corollary.setZoneUsed();
+            return 1;
+        }
+        else return 6;
     }
-    else if(cave.getRoom() == pit1.getHazardRoom() ||
-            cave.getRoom() == pit2.getHazardRoom()){
-        std::cout << "Oh no, you fell in a pit!\n";
-        return 2;
+    else if(field.getArea() == noSong.getZoneArea()){
+        if(noSong.getZoneUse() == 0){
+            std::cout << "\nIt's the no song zone, so I, guess don't sing...?\n" << std::endl;
+            noSong.setZoneUsed();
+            return 2;
+        }
+        else return 6;
     }
-    else if(cave.getRoom() == wompa.getWumpRoom()){
-        std::cout << "GLOMP! The Wumpus just had you for snacks!\n";
-        return 3;
+    else if(field.getArea() == invisible.getZoneArea()){
+        if(invisible.getZoneUse() == 0){
+            std::cout << "\nYou just ran into the Invisible Sector! Cover your eyes until you're out of it because everything " <<
+                "is invisible to you. And you're only out when you're hit with the Calvinball! BWAHAHAHAHA!\n" << std::endl;
+            invisible.setZoneUsed();
+            return 3;
+        }
+        else return 6;
     }
-    return 1;
+    else if(field.getArea() == vortex.getZoneArea()){
+        if(vortex.getZoneUse() == 0){
+            std::cout << "\nYou're in the Vortex Spot - now you have to spin around until you fall down.\n" << std::endl;
+            vortex.setZoneUsed();
+            return 4;
+        }
+        else return 6;
+    }
+    else if(field.getArea() == gameBall.getBallZone()){
+        std::cout << "Look! The Calvinball!!" << std::endl;
+        return 5;
+    }
+    return 6;
 }
-
+/*
 //Shoot function 
 void Explorer::shoot(Cave& cave, Wumpus &wompa){
     if(_arrows == 0)
