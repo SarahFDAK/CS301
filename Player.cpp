@@ -11,6 +11,14 @@ void Player::setPlayerSector(int sector){
     _playerZone = sector;
 };
 
+void Player::setPlayerFlag(int sector){
+    _playerFlag = sector;
+}
+
+void Player::setOpponentFlag(int sector){
+    _opponentFlag = sector;
+}
+
 void Player::setPossession(int ball){
     _calvinBall = ball;
 };
@@ -30,6 +38,14 @@ int Player::getPlayerSector() const{
 int Player::getPossession() const{
     return _calvinBall;
 };
+
+int Player::getPlayerFlag() const{
+    return _playerFlag;
+}
+
+int Player::getOpponentFlag() const{
+    return _opponentFlag;
+}
 
 int Player::getOppPoleUse() const{
     return _oppPole;
@@ -80,7 +96,7 @@ int Player::event(const Field& field, Zones& invisible, Zones& vortex,
     }
     else if(field.getArea() == noSong.getZoneArea()){
         if(noSong.getZoneUse() == 0){
-            std::cout << "\nIt's the no song zone, so I, guess don't sing...?\n" << std::endl;
+            std::cout << "\nIt's the no song zone, so, I guess don't sing...?\n" << std::endl;
             noSong.setZoneUsed();
             return 2;
         }

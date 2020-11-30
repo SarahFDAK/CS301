@@ -91,8 +91,8 @@ int gameChoice(std::string gEntry){
     int option;
     std::istringstream gameString(gEntry);
     if(gameString >> option) return option;
-    //else if(gEntry == "opposite") return 6;
-    //else if(gEntry == "boomerang") return 7;
+    else if(gEntry == "opposite") return 25;
+    else if(gEntry == "boomerang") return 30;
     else{
         std::cout << "THAT wasn't an option! I guess I'll decide for you." << std::endl;
         return choice(1, 5, PRNG());
