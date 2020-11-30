@@ -13,8 +13,8 @@ class Player {
     int _playerZone = 0; //Area of field where player is
     int _opponentZone = 0;
     int _calvinBall = 0; //=1 if player possesses Calvinball
-    int _playerFlag;
-    int _opponentFlag;
+    int _playerFlag=0;
+    int _opponentFlag=0;
     std::string _score = ""; //score can be number, letter, gibberish, etc
     int _oppPole = 0; //=1 if opposite pole used
     int _boomerang = 0; //=1 if boomerang zone used

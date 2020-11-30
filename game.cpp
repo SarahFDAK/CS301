@@ -183,7 +183,8 @@ void game(Player you){
     
     you.setPlayerFlag(you.getPlayerSector());
     you.setOpponentFlag(you.getOpponentSector());
-    
+    std::cout << "Your flag is in area: " << you.getPlayerFlag() << " and your opponent's is in area: " << you.getOpponentFlag() << ".\n" << std::endl;
+
     //initialize variables to be used in the game
     int select = 0;
     std::string gEntry;
@@ -200,6 +201,7 @@ void game(Player you){
         //Set Field object and player zone to allow for shorter member function calls
         int myZone = you.getPlayerSector();
         Field nextDoor = fields[myZone-1];
+        
         
         if(you.getPossession() == 1){
             std::cout << "You have the Calvinball! Do you want to: \n" <<
@@ -229,6 +231,7 @@ void game(Player you){
         }
         else{
             getAsmDirection();
+
             std::cout << "\nYou are in area " << myZone <<". Neighboring sectors are: " <<
             nextDoor.getWilson1() << ", " <<
             nextDoor.getWilson2() << ", and " <<
@@ -241,6 +244,17 @@ void game(Player you){
                 case 3: opponentPoint = points(setPoints());
                     break;
                 case 4: break;
+                case 7: if(choice(0,1,PRNG())==0){
+                            std::cout << "\nYou got your opponent's flag! You win!\n" << std::endl;
+                            select = -1;
+                            break;
+                            }
+                        else{ std::cout << "\nYour opponent got your flag, but you tagged them with the Calvinball and now " <<
+                                "they have to put it back and sing the Very Sorry Song!\n" << std::endl;
+                                    break;
+                    
+                        }
+                    break;
                 case 5: if(myZone == gameBall.getBallZone()){
                                 int WHAT = choice(1,3,PRNG());
                                 switch(WHAT){
@@ -265,41 +279,53 @@ void game(Player you){
                         }
             }
             you.move(nextDoor);
-            
-            int actionOpponent = you.eventOpponent(nextDoor, invisible, vortex, noSong, corollary, gameBall);
-            switch(actionOpponent){
-                case 1: you.setOpponentSector(sectorNum());
-                    continue;
-                case 2: break;
-                case 3: youPoint = points(setPoints());
-                    break;
-                case 4: break;
-                case 5: if(you.getOpponentSector() == gameBall.getBallZone()){
-                                int WHAT = choice(1,3,PRNG());
-                                switch(WHAT){
-                                    case 1: std::cout << "\nThey got it! RUN!\n" << std::endl;
-                                        if(choice(0,1,PRNG())==1){
-                                            std::cout << "Oh MAN, they hit you with it!\n" << std::endl;
-                                            opponentPoint = points(setPoints());
-                                        }
-                                        else std::cout << "HA! They MISSED!\n" << std::endl;
-                                            break;
-                                    case 2: std::cout << "\nHA! They kicked it away!\n" << std::endl;
-                                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
-                                            break;
-                                    case 3: std::cout << "\nYou got it away from them!!\n" << std::endl;
-                                        if(choice(0,1,PRNG()) == 1){
-                                            std::cout << "\nYou got them with the ball!\n" << std::endl;
-                                            youPoint = points(setPoints());
-                                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
-                                        }
-                                        else{
-                                            std::cout << "\nYou missed! The ball flew into another sector.\n" << std::endl;
-                                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
-                                        }
-                                            break;
-                                }
-                        }
+            if(select != -1){
+                int actionOpponent = you.eventOpponent(you.getOpponentSector(), invisible, vortex, noSong, corollary, gameBall);
+                switch(actionOpponent){
+                    case 1: you.setOpponentSector(sectorNum());
+                        continue;
+                    case 2: break;
+                    case 3: youPoint = points(setPoints());
+                        break;
+                    case 4: break;
+                    case 7: if(choice(0,1,PRNG())==0){
+                                std::cout << "\nYour opponent got your flag! You lost!\n" << std::endl;
+                                select = -1;
+                                break;
+                            }
+                            else{ std::cout << "\nYour opponent got your flag, but you tagged them with the Calvinball and now " <<
+                                    "they have to put it back and sing the Very Sorry Song!\n" << std::endl;
+                                        break;
+                        
+                            }
+                        break;
+                    case 5: if(you.getOpponentSector() == gameBall.getBallZone()){
+                                    int WHAT = choice(1,3,PRNG());
+                                    switch(WHAT){
+                                        case 1: std::cout << "\nThey got it! RUN!\n" << std::endl;
+                                            if(choice(0,1,PRNG())==1){
+                                                std::cout << "Oh MAN, they hit you with it!\n" << std::endl;
+                                                opponentPoint = points(setPoints());
+                                            }
+                                            else std::cout << "HA! They MISSED!\n" << std::endl;
+                                                break;
+                                        case 2: std::cout << "\nHA! They kicked it away!\n" << std::endl;
+                                                while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
+                                                break;
+                                        case 3: std::cout << "\nYou got it away from them!!\n" << std::endl;
+                                            if(choice(0,1,PRNG()) == 1){
+                                                std::cout << "\nYou got them with the ball!\n" << std::endl;
+                                                youPoint = points(setPoints());
+                                                while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
+                                            }
+                                            else{
+                                                std::cout << "\nYou missed! The ball flew into another sector.\n" << std::endl;
+                                                while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
+                                            }
+                                                break;
+                                    }
+                            }
+                }
             }
             //Move opponent randomly
             you.setOpponentSector(sectorNum());

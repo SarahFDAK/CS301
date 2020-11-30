@@ -131,6 +131,10 @@ int Player::event(const Field& field, Zones& invisible, Zones& vortex,
         std::cout << "Look! The Calvinball!!" << std::endl;
         return 5;
     }
+    else if(field.getArea() == _opponentFlag){
+        std::cout << "\nThere's your opponent's flag!\n" << std::endl;
+        return 7;
+    }
     return 6;
 }
 
@@ -173,6 +177,7 @@ int Player::eventOpponent(const Field& field, Zones& invisible, Zones& vortex,
         std::cout << "Oh no! Your opponent sees the Calvinball!!" << std::endl;
         return 5;
     }
+    else if(field.getArea() == _playerFlag) return 7;
     return 6;
 }
     
