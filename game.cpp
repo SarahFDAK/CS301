@@ -99,10 +99,12 @@ int gameChoice(std::string gEntry){
     }
 }
 
+//Provide choice for randomized area assignment
 int sectorNum(){
     return choice(1,20,PRNG());
 }
 
+//Provide choice for randomized points assignment
 int setPoints(){
     return choice(0,12,PRNG());
 }
@@ -170,22 +172,26 @@ void game(Player you){
           corollary.getZoneArea() == noSong.getZoneArea() ||
           corollary.getZoneArea() == invisible.getZoneArea())
         corollary.setZoneArea(sectorNum());
+    
+    //initialize variables to be used in the game
     int select = 0;
     std::string gEntry;
     getAsmDirection();
     std::string youPoint = "zip";
     std::string opponentPoint = "nada";
     
+    //every 3 rounds, report the score
     int round = 0;
     
-    std::cout << points(choice(0,12,PRNG())) << std::endl;
     
-    
-    /*do{
+    do{
+        //Increment the round - will range 1 to 3
         round++;
-        //Set Field object to allow for shorter member function calls
-        Field nextDoor = fields[you.getPlayerSector()-1];
+        
+        //Set Field object and player zone to allow for shorter member function calls
         int myZone = you.getPlayerSector();
+        Field nextDoor = fields[myZone-1];
+        
         if(you.getPossession() == 1){
             std::cout << "You have the Calvinball! Do you want to: \n" <<
             "1 - Throw it at your opponent\n" <<
@@ -209,11 +215,11 @@ void game(Player you){
             else continue;
         }
         else{
-            std::cout << "\nYou are in area " << you.getPlayerSector() <<". Neighboring sectors are: " <<
+            std::cout << "\nYou are in area " << myZone <<". Neighboring sectors are: " <<
             nextDoor.getWilson1() << ", " <<
             nextDoor.getWilson2() << ", and " <<
             nextDoor.getWilson3() << ".\n";
-            if(you.getPlayerSector() == gameBall.getBallZone()){
+            if(myZone == gameBall.getBallZone()){
                 std::cout << "Look! The Calvinball!!" << std::endl;
                 int WHAT = choice(1,3,PRNG());
                 switch(WHAT){
@@ -221,14 +227,14 @@ void game(Player you){
                             you.setPossession(1);
                             break;
                     case 2: std::cout << "\nSHOOT! You kicked it away!\n" << std::endl;
-                            while(gameBall.getBallZone() == you.getPlayerSector()) gameBall.setBallZone(sectorNum());
+                            while(gameBall.getBallZone() == myZone) gameBall.setBallZone(sectorNum());
                             break;
                     case 3: std::cout << "\nWhaddaya MEAN you don't want the Calvinball?? Fine... carry on...\n" << std::endl;
                             break;
                 }
             }
-            if(you.getPlayerSector() == vortex.getZoneArea() || you.getPlayerSector() == invisible.getZoneArea() ||
-               you.getPlayerSector() == noSong.getZoneArea() || you.getPlayerSector() == corollary.getZoneArea()){
+            if(myZone == vortex.getZoneArea() || myZone == invisible.getZoneArea() ||
+               myZone == noSong.getZoneArea() || myZone == corollary.getZoneArea()){
                 int uhoh = choice(1,4,PRNG());
                 switch(uhoh){
                     case 1: std::cout << "\nYou just ran into the Invisible Sector! Cover your eyes until you're out of it because everything " <<
@@ -243,7 +249,7 @@ void game(Player you){
             }
             you.move(nextDoor);
             
-            std::cout << "Enter 1 to continue or -1 to quit: " << std::endl;
+            std::cout << "Enter to continue or -1 to quit: " << std::endl;
             std::getline(std::cin, gEntry);
             std::istringstream quit(gEntry);
             if(quit >> select){
@@ -255,7 +261,7 @@ void game(Player you){
             round = 0;
             continue;
         }
-    }while(select != -1);*/
+    }while(select != -1);
     std::cout << "Thanks for playing!" << std::endl;
 }
 
