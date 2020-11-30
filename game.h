@@ -5,6 +5,10 @@
 #include <random>
 #include <sstream>
 
+#include "PlayingField.hpp"
+#include "Zones.hpp"
+#include "Calvinball.hpp"
+
 class Player {
     int _playerZone = 0; //Area of field where player is
     int _calvinBall = 0; //=1 if player possesses Calvinball
@@ -19,7 +23,10 @@ public:
     void setPossession(int ball); //change if player has the Calvinball or not
     void setOppPoleUse(); //change to 1 if player has touched the opposite pole
     void setBoomerangUse(); //change to 1 if player has called Boomerang Zone
-    
+    void move(const Field& field);
+
+    int event(const Field& field, const Zones& invisible, const Zones& vortex,
+               const Zones& noSong, const Zones& corollary, Calvinball& gameBall);
     int getPossession() const;
     int getOppPoleUse() const;
     int getBoomerangUse() const;
