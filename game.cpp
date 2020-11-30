@@ -187,7 +187,6 @@ void game(Player you){
     //initialize variables to be used in the game
     int select = 0;
     std::string gEntry;
-    getAsmDirection();
     std::string youPoint = "zip";
     std::string opponentPoint = "nada";
     
@@ -198,7 +197,6 @@ void game(Player you){
     do{
         //Increment the round - will range 1 to 3
         round++;
-        std::cout << "\nRound# " << round << std::endl;
         //Set Field object and player zone to allow for shorter member function calls
         int myZone = you.getPlayerSector();
         Field nextDoor = fields[myZone-1];
@@ -230,6 +228,7 @@ void game(Player you){
             }
         }
         else{
+            getAsmDirection();
             std::cout << "\nYou are in area " << myZone <<". Neighboring sectors are: " <<
             nextDoor.getWilson1() << ", " <<
             nextDoor.getWilson2() << ", and " <<
