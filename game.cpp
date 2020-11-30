@@ -211,8 +211,9 @@ void game(Player you){
                         gameBall.setBallZone(sectorNum());
                     break;
                 case 2: while(you.getPlayerSector() == myZone) you.setPlayerSector(sectorNum());
+                    std::cout << "\nYou are now in area " << myZone << ".\n" << std::endl;
                     break;
-                case 3: std::cout << "\nA strange choice, but ok...\n" << std::endl;
+                case 3: std::cout << "\nA strange choice, but ok... You're still in the same place with the ball.\n" << std::endl;
                     break;
                 default: break;
             }
@@ -262,7 +263,7 @@ void game(Player you){
                 if(select == -1) continue;
             }
         }
-        if(round == 3){
+        if(round >= 3){
             std::cout << "\nThe score is " << youPoint << " to " << opponentPoint << "\n"<< std::endl;
             round = 0;
             continue;
