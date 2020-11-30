@@ -184,9 +184,11 @@ void game(Player you){
     std::string youPoint = "zip";
     std::string opponentPoint = "nada";
     
-    
+    int round = 0;
     
     do{
+        round++;
+        std::cout << "Round# " << round << std::endl;
         //Set Field object to allow for shorter member function calls
         Field nextDoor = fields[you.getPlayerSector()-1];
         int myZone = you.getPlayerSector();
@@ -200,10 +202,10 @@ void game(Player you){
             select = gameChoice(gEntry);
             if(select == 1){
                 int hit = choice(0,1,PRNG());
-                if(hit){ youPoint = points(setPoints());
-                    std::cout << "Got 'em!! The score is now " << youPoint << " to " << opponentPoint << std::endl;
+                if(hit==1){ youPoint = points(setPoints());
+                    std::cout << "Got 'em!! The score is now " << youPoint << " to " << opponentPoint << "\n" << std::endl;
                 }
-                else std::cout << "MISSED..." << std::endl;
+                else std::cout << "MISSED...\n" << std::endl;
                 you.setPossession(0);
                 gameBall.setBallZone(sectorNum());
             }
@@ -221,13 +223,13 @@ void game(Player you){
                 std::cout << "Look! The Calvinball!!" << std::endl;
                 int WHAT = choice(1,3,PRNG());
                 switch(WHAT){
-                    case 1: std::cout << "You GOT it! RUN!" << std::endl;
+                    case 1: std::cout << "You GOT it! RUN!\n" << std::endl;
                             you.setPossession(1);
                             break;
-                    case 2: std::cout << "SHOOT! You kicked it away!" << std::endl;
+                    case 2: std::cout << "SHOOT! You kicked it away!\n" << std::endl;
                             while(gameBall.getBallZone() == you.getPlayerSector()) gameBall.setBallZone(sectorNum());
                             break;
-                    case 3: std::cout << "Whaddaya MEAN you don't want the Calvinball?? Fine... carry on..." << std::endl;
+                    case 3: std::cout << "Whaddaya MEAN you don't want the Calvinball?? Fine... carry on...\n" << std::endl;
                             break;
                 }
             }
@@ -235,11 +237,11 @@ void game(Player you){
                you.getPlayerSector() == noSong.getZoneArea() || you.getPlayerSector() == corollary.getZoneArea()){
                 int uhoh = choice(1,4,PRNG());
                 switch(uhoh){
-                    case 1: std::cout << "You just ran into the Invisible Sector! Cover your eyes until you're out of it because everything " <<
-                        "is invisible to you. And you're only out when you're hit with the Calvinball! BWAHAHAHAHA!" << std::endl;
-                        opponentPoint = setPoints();
+                    case 1: std::cout << "\nYou just ran into the Invisible Sector! Cover your eyes until you're out of it because everything " <<
+                        "is invisible to you. And you're only out when you're hit with the Calvinball! BWAHAHAHAHA!\n" << std::endl;
+                        opponentPoint = points(setPoints());
                         break;
-                    case 2: std::cout << "You're in the Vortex Spot - now you have to spin around until you fall down." << std::endl;
+                    case 2: std::cout << "\nYou're in the Vortex Spot - now you have to spin around until you fall down.\n" << std::endl;
                         break;
                     case 3: std::cout << "No song zone" << std::endl;
                     case 4: std::cout << "Corollary zone" << std::endl;
@@ -251,58 +253,14 @@ void game(Player you){
             std::getline(std::cin, gEntry);
             std::istringstream quit(gEntry);
             if(quit >> select){
-                continue;
+                if(select == -1) continue;
             }
         }
-            
-        /*}*/
-        
-        /*std::cout << "Make a selection:\n" <<
-                     "1) Move left\n" <<
-                     "2) Move Right\n" <<
-                     "3) Run in circles\n" <<
-                     "4) Touch opposite pole\n" <<
-                     "5) Declare Boomerang Zone\n" <<
-                     "Enter -1 to quit" << std::endl;
-        std::getline(std::cin, gEntry);
-        std::istringstream gameString(gEntry);
-        if(gameString >> select){
-            
-            if(select == 1){
-                std::cout << "\nYou moved left.\n";
-                getAsmDirection();
-            }
-            else if(select == 2){
-                std::cout << "\nYou moved right.\n";
-                getAsmDirection();
-            }
-            else if(select == 3){
-                std::cout <<"\nYou ran in circles.\n";
-                getAsmDirection();
-            }
-            else if(select == 4){
-                if(you.getOppPoleUse() == 1){
-                    std::cout << "\nSorry, you already touched the opposite pole to get out of something.\n" << std::endl;
-                }
-                else{
-                    you.setOppPoleUse();
-                    std::cout << "\nYou touched the opposite pole! Now you don't have to do anything!\n" << std::endl;
-                    getAsmDirection();
-                }
-            }
-            else if(select == 5){
-                if(you.getBoomerangUse() == 1){
-                    std::cout << "\nSorry, you already called the Boomerang Zone to get out of something.\n" << std::endl;
-                }
-                else{
-                    you.setBoomerangUse();
-                    std::cout << "\nYou called Boomerang Zone! That means I have to do that!! D:\n" << std::endl;
-                    getAsmDirection();
-                }
-            }
-            else std::cout << "\nPlease choose 1-5 or enter -1 to quit.\n" << std::endl;
+        if(round == 3){
+            std::cout << "\nThe score is " << youPoint << " to " << opponentPoint << "\n"<< std::endl;
+            round = 0;
+            continue;
         }
-        else std::cout << "\nPlease choose 1-5 or enter -1 to quit.\n" << std::endl;*/
     }while(select != -1);
     std::cout << "Thanks for playing!" << std::endl;
 }
