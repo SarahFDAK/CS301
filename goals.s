@@ -2,9 +2,9 @@ global _objectives
 section .text
 
 _objectives:
-  mov rcx, rdi
-  lea rdx, [rel _goals]
-  mov rax, [rdx + 8*rcx]
+  mov rcx, rdi           ;put game.cpp random int input into rcx
+  lea rdx, [rel _goals]  ;create pointer to goal pointers
+  mov rax, [rdx + 8*rcx] ;access goal text
   ret
   
 _goals:
